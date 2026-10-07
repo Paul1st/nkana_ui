@@ -1,0 +1,97 @@
+/* form.css - Document forms.
+   - Title with a aqua accent bar; status pill ("Not Saved", "Active"…) with a dot
+   - Section headings as soft blue bars (numbering was tried and removed, see GUIDE §10)
+   - Column labels (e.g. "A. DETAILS OF THE OFFENDER") as clear sub-headings
+   - Clearer labels, rounded inputs, blue focus ring
+   Scoped to forms on the page (.page-container), so pop-up dialogs keep Frappe's look. */
+
+/* ── Title & status pill ─────────────────────────────────────────────────── */
+body[data-route^="Form"] .page-head .title-text::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 1.05em;
+  margin-right: 12px;
+  border-radius: 4px;
+  background: var(--ui-title-accent);
+  vertical-align: -0.12em;
+}
+
+.page-head .title-area .indicator-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+/* Frappe hides the pill's dot (no-indicator-dot); the mockup shows one */
+.page-head .title-area .indicator-pill.no-indicator-dot::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ── Section bars ───────────────────────────────────────────────────────── */
+.page-container .form-page .form-section > .section-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 2px 0 12px;
+  padding: 9px 14px;
+  border-radius: 12px;
+  background: var(--ui-tint);
+  color: var(--ui-text-strong);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Collapsible sections: keep the arrow at the right end of the bar */
+.page-container .form-page .form-section > .section-head .collapse-indicator {
+  margin-left: auto !important;
+}
+
+.page-container .form-page .form-section > .section-head.collapsible {
+  cursor: pointer;
+}
+
+.page-container .form-page .form-section > .section-head.collapsible:hover {
+  background: var(--ui-tint-strong);
+}
+
+/* ── Column labels (a labelled Column Break, e.g. "A. DETAILS OF THE OFFENDER") ── */
+.page-container .form-page .form-column .column-label {
+  display: block;
+  margin: 2px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--ui-tint-strong);
+  color: var(--ui-primary);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* ── Fields ─────────────────────────────────────────────────────────────── */
+.page-container .form-page .control-label {
+  color: var(--ui-text-strong);
+  font-weight: 500;
+}
+
+.page-container .form-page .frappe-control .form-control {
+  border-radius: 8px;
+}
+
+.page-container .form-page .frappe-control .form-control:focus {
+  border-color: var(--ui-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-primary) 18%, transparent);
+}
+
+/* Read-only values (e.g. fetched fields) */
+.page-container .form-page .like-disabled-input {
+  border-radius: 8px;
+}

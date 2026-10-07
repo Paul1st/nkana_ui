@@ -1,0 +1,5 @@
+/* ui_login.bundle.scss - Login page styles (www/login.html: include_style("ui_login.bundle.css")).
+   Frappe's build bundles this into ONE fingerprinted file, so browsers always fetch the latest
+   version after a change. The imported files are plain CSS. */
+@import "./nkana_palette";
+@import "./login";

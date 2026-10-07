@@ -1,0 +1,19 @@
+/* ui_desk.bundle.scss - Desk entry point (hooks.py: app_include_css = "ui_desk.bundle.css").
+   Frappe's build (bench build / bench watch) bundles this and the files below into ONE
+   fingerprinted file, so browsers always fetch the latest version after a change.
+   The imported files are plain CSS.
+   Colours: nkana_palette.css (brand) → variables.css (roles). Breakpoints: 992px, 576px. */
+@import "./nkana_palette";
+@import "./variables";
+@import "./themes";
+@import "./base";
+@import "./navbar";
+@import "./sidebar";
+@import "./main_section";
+@import "./rail";
+@import "./workspace";
+@import "./form";
+@import "./list";
+@import "./workflow_colours";
+@import "./dark_mode";
+@import "./splash";

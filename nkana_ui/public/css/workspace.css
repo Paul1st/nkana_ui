@@ -1,0 +1,110 @@
+/* workspace.css - Workspace pages. Script: public/js/ui_workspace.js.
+   - .ui-ws-panel: soft blue panel drawn behind "heading + shortcuts" groups
+   - shortcut pills: full column width, round icon, label, arrow, yellow count */
+
+/* ── Section panels ─────────────────────────────────────────────────────── */
+.codex-editor {
+  position: relative;
+}
+
+.codex-editor > .codex-editor__redactor {
+  position: relative;
+  z-index: 1;               /* blocks above the panel drawn behind them */
+}
+
+.ui-ws-panel {
+  position: absolute;
+  z-index: 0;
+  border-radius: 18px;
+  background: var(--ui-tint);
+  border: 1px solid var(--ui-tint-strong);
+  pointer-events: none;
+}
+
+/* Space between a panel and whatever comes after it */
+.ce-block.ui-ws-after-panel {
+  margin-top: 22px;
+}
+
+/* Heading inside a panel */
+.ui-ws-panel-head .ce-header,
+.ui-ws-panel-head .ce-header .h4 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--ui-text-strong);
+}
+
+/* ── Shortcut pills ─────────────────────────────────────────────────────── */
+.shortcut-widget-box {
+  width: auto !important;          /* fill the grid column so rows line up */
+  padding: 10px 14px 10px 10px !important;
+}
+
+.shortcut-widget-box .widget-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;              /* Frappe lets the row grow to its content; keep it inside the pill */
+  min-width: 0;
+}
+
+.shortcut-widget-box .widget-head .widget-label,
+.shortcut-widget-box .widget-head .widget-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;         /* long labels end in "…" instead of pushing the arrow out */
+}
+
+.shortcut-widget-box .widget-head .widget-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+/* Round icon at the start of each pill */
+.ui-sc-icon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--ui-icon-bg);
+}
+
+.ui-sc-icon svg {
+  --icon-stroke: var(--ui-icon-ink);
+  stroke: var(--ui-icon-ink);
+  width: 16px;
+  height: 16px;
+}
+
+/* Arrow after the label/badge: quieter */
+.shortcut-widget-box .widget-control > svg {
+  margin-left: 0 !important;
+  opacity: 0.55;
+}
+
+.shortcut-widget-box .widget-control .indicator-pill {
+  margin-left: 0 !important;
+}
+
+.shortcut-widget-box:hover .widget-control > svg {
+  opacity: 1;
+}
+
+/* Count badge: sits at the far right */
+.shortcut-widget-box .widget-control .indicator-pill {
+  order: 2;
+}
+
+/* Laptop widths with the side menu open: 4 pills per row are too narrow for labels like
+   "Employee Record", so use 3 per row. Wide screens, a collapsed menu, and edit mode
+   (where the editor's own column sizes apply) are unchanged. */
+@media (min-width: 992px) and (max-width: 1499.98px) {
+  body:not(.ui-rail-collapsed) .layout-main-section:not(.edit-mode) .ce-block:has(> .ce-block__content .shortcut-widget-box) {
+    flex: 0 0 33.3333% !important;
+    max-width: 33.3333% !important;
+  }
+}

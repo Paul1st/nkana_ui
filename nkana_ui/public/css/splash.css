@@ -1,0 +1,143 @@
+/* splash.css – desk loading screen (templates/includes/splash_screen.html). GUIDE §15.
+ * "The Drop". Timeline (seconds from page load; the desk is ready in ~1.2 s):
+ *   0.0–0.25 dark background fades in
+ *   1. 0.15–0.55  a glowing drop falls to the water
+ *   2. 0.55       impact: a jet shoots up, droplets fly out, rings ripple across the surface (to ~2.0)
+ *   3. 0.55–1.0   light glows where it landed
+ *   4. 0.6–1.3    the water swells up; waves drift, light rays shimmer and bubbles rise (looping)
+ *   5. 1.2–2.0    the Nkana logo rises out of the water like a bubble, a ring pulses out, tagline
+ *   2.4           fades out (or as soon as the desk is ready after that)
+ * Same scene in light and dark mode on purpose. */
+.ui-splash {
+  position: fixed; inset: 0; z-index: 2000; overflow: hidden; cursor: pointer;
+  background: linear-gradient(180deg, #030a17 0%, #0a1c3a 60%, #11336a 100%);
+  transition: opacity .5s ease;
+}
+.ui-splash--out { opacity: 0; pointer-events: none; }
+
+.ui-sp-scene {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  animation: ui-sp-fade .25s ease-out both;
+}
+
+/* 1. the drop */
+.ui-sp-drop { animation: ui-sp-fall .4s cubic-bezier(.55, 0, 1, .45) .15s both; }
+
+/* 2. the splash */
+.ui-sp-jet {
+  fill: #bfeaff; opacity: 0;
+  transform-box: fill-box; transform-origin: 50% 100%;
+  animation: ui-sp-jet .5s ease-out .55s both;
+}
+.ui-sp-crown {
+  fill: #bfeaff; opacity: 0;
+  animation: ui-sp-crown .6s cubic-bezier(.2, .7, .5, 1) .55s both;
+}
+.ui-sp-ripple {
+  stroke: #8ED6F5; stroke-width: 2; vector-effect: non-scaling-stroke; opacity: 0;
+  transform-box: fill-box; transform-origin: center;
+  animation: ui-sp-ripple 1.3s cubic-bezier(.2, .6, .3, 1) var(--d) both;
+}
+
+/* 3. impact glow */
+.ui-sp-impact { opacity: 0; animation: ui-sp-glow 1.2s ease-out .5s both; }
+
+/* 4. the water */
+.ui-sp-water { transform: translateY(40px); animation: ui-sp-swell .8s cubic-bezier(.3, .7, .3, 1) .6s forwards; }
+.ui-sp-wave--back { fill: rgba(34, 184, 230, .38); animation: ui-sp-drift-a 3.6s linear infinite; }
+.ui-sp-wave--mid { fill: rgba(27, 63, 196, .6); animation: ui-sp-drift-b 2.8s linear infinite; }
+.ui-sp-wave--front { animation: ui-sp-drift-c 2.2s linear infinite; }
+.ui-sp-ray {
+  opacity: 0; mix-blend-mode: screen;
+  animation: ui-sp-shimmer var(--t) ease-in-out var(--d) infinite alternate;
+}
+.ui-sp-bubble {
+  fill: rgba(255, 255, 255, .12); stroke: rgba(191, 234, 255, .55); stroke-width: 1; opacity: 0;
+  animation: ui-sp-bubble var(--t) ease-in var(--d) infinite;
+}
+
+/* 5. the logo: the blue ring would sink into the dark background, so it sits on a white disc */
+.ui-sp-brand {
+  position: absolute; left: 50%; top: 34%; transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+  width: min(210px, 52vw);
+}
+.ui-sp-logo { position: relative; width: 100%; animation: ui-sp-emerge .8s cubic-bezier(.2, .9, .3, 1.25) 1.2s both; }
+.ui-sp-logo img {
+  display: block; width: 100%; height: auto; padding: 6px;
+  border-radius: 50%; background: #fff;
+  box-shadow: 0 0 0 6px rgba(142, 214, 245, .16), 0 0 46px rgba(34, 184, 230, .5);
+  animation: ui-sp-bob 3s ease-in-out 2s infinite;
+}
+/* a ring pulses out of the logo, echoing the ripples */
+.ui-sp-logo::after {
+  content: ""; position: absolute; inset: -6px; border-radius: 50%;
+  border: 2px solid rgba(142, 214, 245, .7); opacity: 0;
+  animation: ui-sp-ring 1.2s ease-out 1.55s both;
+}
+.ui-sp-tag {
+  color: #8ED6F5; font: 600 15px/1.2 system-ui, -apple-system, "Segoe UI", sans-serif;
+  letter-spacing: .2em; text-transform: uppercase; text-align: center; white-space: nowrap;
+  animation: ui-sp-rise .5s ease-out 1.65s both;
+}
+.ui-sp-skip {
+  position: absolute; right: 18px; bottom: 14px;
+  color: rgba(255, 255, 255, .45); font: 12px system-ui, sans-serif;
+  animation: ui-sp-fade .4s ease .4s both;
+}
+
+/* Logo-only version: later loads in the same tab, and "reduce motion" users */
+.ui-splash--short .ui-sp-scene, .ui-splash--short .ui-sp-skip { display: none; }
+.ui-splash--short .ui-sp-logo, .ui-splash--short .ui-sp-tag { animation: ui-sp-fade .3s ease-out both; }
+.ui-splash--short .ui-sp-logo img, .ui-splash--short .ui-sp-logo::after { animation: none; }
+.ui-splash--short .ui-sp-brand { top: 45%; }
+
+@media (max-width: 576px) {
+  .ui-sp-tag { font-size: 12px; letter-spacing: .12em; }
+}
+
+@keyframes ui-sp-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ui-sp-fall {
+  from { transform: translateY(-40px); opacity: 0; }
+  15% { opacity: 1; }
+  99% { opacity: 1; }
+  to { transform: translateY(400px); opacity: 0; }
+}
+@keyframes ui-sp-jet {
+  0% { opacity: 0; transform: scaleY(0); }
+  5% { opacity: .95; }
+  45% { opacity: .95; transform: scaleY(1); }
+  100% { opacity: 0; transform: scaleY(0); }
+}
+@keyframes ui-sp-crown {
+  0% { opacity: 0; transform: translate(0, 0); }
+  5% { opacity: 1; }
+  55% { opacity: 1; transform: translate(calc(var(--dx) * .7), var(--dy)); }
+  100% { opacity: 0; transform: translate(var(--dx), 14px); }
+}
+@keyframes ui-sp-ripple {
+  0% { opacity: 0; transform: scale(1); }
+  4% { opacity: .9; }
+  100% { opacity: 0; transform: scale(14); }
+}
+@keyframes ui-sp-glow { 0% { opacity: 0; } 30% { opacity: 1; } 100% { opacity: .55; } }
+@keyframes ui-sp-swell { to { transform: translateY(0); } }
+/* each drift is exactly one wave period, so the loop is seamless */
+@keyframes ui-sp-drift-a { to { transform: translateX(-480px); } }
+@keyframes ui-sp-drift-b { to { transform: translateX(360px); } }
+@keyframes ui-sp-drift-c { to { transform: translateX(-240px); } }
+@keyframes ui-sp-shimmer { from { opacity: .15; } to { opacity: 1; } }
+@keyframes ui-sp-bubble {
+  0% { opacity: 0; transform: translateY(0); }
+  15% { opacity: 1; }
+  80% { opacity: .8; }
+  100% { opacity: 0; transform: translateY(-190px); }
+}
+@keyframes ui-sp-emerge {
+  0% { opacity: 0; transform: translateY(90px) scale(.35); }
+  60% { opacity: 1; }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes ui-sp-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes ui-sp-ring { 0% { opacity: 0; transform: scale(1); } 5% { opacity: .9; } 100% { opacity: 0; transform: scale(1.6); } }
+@keyframes ui-sp-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }

@@ -1,0 +1,353 @@
+/* themes.css - per-user colour themes (picked in the avatar menu → "Colour Theme").
+ *
+ * public/js/ui_themes.js puts the user's choice on <html data-ui-theme="…">. Each theme below
+ * re-maps the ROLE tokens from variables.css; nothing else in the app needs to know about themes.
+ * "nkana" (Nkana Blue) is the default and is simply the values in variables.css.
+ *
+ * Every theme has up to three selectors:
+ *   html[data-ui-theme="x"]:not([data-theme="dark"])   the theme in Light mode
+ *   .ui-theme-swatch[data-ui-theme="x"]               the preview card in the picker
+ *                                                       (always shows the Light look)
+ *   html[data-ui-theme="x"][data-theme="dark"]         accents for Dark mode. Dark mode keeps
+ *                                                       its dark surfaces (variables.css) and only
+ *                                                       takes the theme's accent colours.
+ * Light/Dark itself stays Frappe's own switch ("Toggle Theme"); it combines with any colour theme.
+ *
+ * Adding a theme: a block here, an entry in THEMES in ui_themes.js, and the name in UI_THEMES in
+ * api.py (the server only saves names it knows). See GUIDE.md §14.
+ */
+
+/* ── Nkana Blue (default): only the swatch, the page already uses variables.css ── */
+.ui-theme-swatch[data-ui-theme="nkana"] {
+  --ui-primary: var(--nk-sky-deep);
+  --ui-navbar-bg: var(--nk-sky);
+  --ui-navbar-ink: var(--nk-navy);
+  --ui-sidebar-bg: var(--nk-navy);
+  --ui-sidebar-active-bg: var(--nk-sky);
+  --ui-badge-bg: var(--nk-sun);
+  --ui-tint: var(--nk-sky-20);
+  --ui-tint-strong: var(--nk-sky-40);
+  --ui-icon-bg: var(--nk-sky-40);
+  --ui-icon-ink: var(--nk-sky-deep);
+}
+
+/* ── Nkana Aqua: aqua top bar, aqua buttons ────────────────────────────────  */
+html[data-ui-theme="copper"]:not([data-theme="dark"]),
+.ui-theme-swatch[data-ui-theme="copper"] {
+  --ui-primary: var(--nk-aqua-deep);
+  --ui-primary-hover: var(--nk-aqua-deeper);
+  --ui-navbar-bg: var(--nk-aqua);
+  --ui-navbar-ink: var(--nk-navy);
+  --ui-navbar-ink-soft: rgba(35, 31, 32, 0.75);
+  --ui-sidebar-bg: var(--nk-navy);
+  --ui-sidebar-active-bg: var(--nk-aqua);
+  --ui-sidebar-active-ink: var(--nk-navy);
+  --ui-badge-bg: var(--nk-sun);
+  --ui-title-accent: var(--nk-aqua);
+  --ui-highlight: var(--nk-sky-deep);
+  --ui-tint: var(--nk-aqua-20);
+  --ui-tint-strong: var(--nk-aqua-40);
+  --ui-icon-bg: var(--nk-aqua-40);
+  --ui-icon-ink: var(--nk-aqua-deep);
+  --ui-avatar-ink: var(--nk-aqua-deep);
+  --ui-card-hover-border: var(--nk-aqua);
+}
+
+html[data-ui-theme="copper"][data-theme="dark"] {
+  --ui-primary: var(--nk-aqua-deep);
+  --ui-primary-hover: #B86A33;
+  --ui-sidebar-active-bg: var(--nk-aqua);
+  --ui-sidebar-active-ink: var(--nk-navy);
+  --ui-title-accent: var(--nk-aqua);
+  --ui-highlight: var(--nk-sky);
+  --ui-tint: rgba(207, 130, 74, 0.08);
+  --ui-tint-strong: rgba(207, 130, 74, 0.16);
+  --ui-icon-bg: rgba(207, 130, 74, 0.18);
+  --ui-icon-ink: var(--nk-aqua);
+  --ui-card-hover-border: var(--nk-aqua);
+}
+
+/* ── Nkana Navy: dark top bar, blue accents ────────────────────────────────  */
+html[data-ui-theme="charcoal"]:not([data-theme="dark"]),
+.ui-theme-swatch[data-ui-theme="charcoal"] {
+  --ui-primary: var(--nk-sky-deep);
+  --ui-primary-hover: var(--nk-sky-deeper);
+  --ui-navbar-bg: var(--nk-navy);
+  --ui-navbar-ink: #FFFFFF;
+  --ui-navbar-ink-soft: rgba(255, 255, 255, 0.75);
+  --ui-navbar-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+  --ui-sidebar-bg: #161314;
+  --ui-sidebar-active-bg: var(--nk-sky);
+  --ui-sidebar-active-ink: var(--nk-navy);
+  --ui-badge-bg: var(--nk-sun);
+  --ui-title-accent: var(--nk-sky);
+  --ui-highlight: var(--nk-aqua-deep);
+  --ui-tint: var(--nk-sky-20);
+  --ui-tint-strong: var(--nk-sky-40);
+  --ui-icon-bg: var(--nk-sky-40);
+  --ui-icon-ink: var(--nk-sky-deep);
+  --ui-avatar-ink: var(--nk-navy);
+  --ui-card-hover-border: var(--nk-sky);
+  --ui-navbar-highlight: var(--nk-aqua);
+  /* Filter bar is dark too: white fields, yellow focus ring */
+  --ui-filterbar-focus: var(--nk-sun);
+}
+
+/* ── Deep Forest: dark-green top bar ─────────────────────────────────────── */
+html[data-ui-theme="forest"]:not([data-theme="dark"]),
+.ui-theme-swatch[data-ui-theme="forest"] {
+  --ui-primary: var(--nk-sky-deep);
+  --ui-primary-hover: var(--nk-sky-deeper);
+  --ui-navbar-bg: var(--nk-sky-deep);
+  --ui-navbar-ink: #FFFFFF;
+  --ui-navbar-ink-soft: rgba(255, 255, 255, 0.78);
+  --ui-navbar-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+  --ui-sidebar-bg: #10261A;
+  --ui-sidebar-active-bg: var(--nk-sky);
+  --ui-sidebar-active-ink: var(--nk-navy);
+  --ui-badge-bg: var(--nk-sun);
+  --ui-title-accent: var(--nk-sky-deep);
+  --ui-highlight: var(--nk-aqua-deep);
+  --ui-tint: var(--nk-sky-20);
+  --ui-tint-strong: var(--nk-sky-40);
+  --ui-icon-bg: var(--nk-sky-40);
+  --ui-icon-ink: var(--nk-sky-deep);
+  --ui-avatar-ink: var(--nk-sky-deep);
+  --ui-card-hover-border: var(--nk-sky-deep);
+  --ui-navbar-highlight: var(--nk-sun);
+  --ui-filterbar-focus: var(--nk-sun);
+}
+
+html[data-ui-theme="forest"][data-theme="dark"] {
+  --ui-navbar-bg: #14301F;
+  --ui-sidebar-bg: #0B1A11;
+}
+
+/* ── Ocean Blue ───────────────────────────────────────────────────────────── */
+html[data-ui-theme="ocean"]:not([data-theme="dark"]),
+.ui-theme-swatch[data-ui-theme="ocean"] {
+  --ui-primary: #1F5F99;
+  --ui-primary-hover: #194E7E;
+  --ui-navbar-bg: #BFDBF2;
+  --ui-navbar-ink: #0F2338;
+  --ui-navbar-ink-soft: rgba(15, 35, 56, 0.72);
+  --ui-sidebar-bg: #14243A;
+  --ui-sidebar-active-bg: #8EC1EE;
+  --ui-sidebar-active-ink: #0F2338;
+  --ui-badge-bg: #F5C542;
+  --ui-badge-ink: #0F2338;
+  --ui-title-accent: #5FA3E0;
+  --ui-highlight: var(--nk-aqua-deep);
+  --ui-tint: #EEF5FC;
+  --ui-tint-strong: #DBEAF8;
+  --ui-icon-bg: #DBEAF8;
+  --ui-icon-ink: #1F5F99;
+  --ui-avatar-ink: #1F5F99;
+  --ui-card-hover-border: #5FA3E0;
+}
+
+html[data-ui-theme="ocean"][data-theme="dark"] {
+  --ui-primary: #2C74B8;
+  --ui-primary-hover: #3583CC;
+  --ui-sidebar-active-bg: #8EC1EE;
+  --ui-sidebar-active-ink: #0F2338;
+  --ui-badge-bg: #F5C542;
+  --ui-badge-ink: #0F2338;
+  --ui-title-accent: #8EC1EE;
+  --ui-tint: rgba(142, 193, 238, 0.08);
+  --ui-tint-strong: rgba(142, 193, 238, 0.16);
+  --ui-icon-bg: rgba(142, 193, 238, 0.18);
+  --ui-icon-ink: #8EC1EE;
+  --ui-card-hover-border: #8EC1EE;
+}
+
+/* ── Minimal Slate: white top bar, grey-blue accents, quiet ───────────────── */
+html[data-ui-theme="slate"]:not([data-theme="dark"]),
+.ui-theme-swatch[data-ui-theme="slate"] {
+  --ui-primary: #2F4A6B;
+  --ui-primary-hover: #253C58;
+  --ui-navbar-bg: #FFFFFF;
+  --ui-navbar-ink: #1C1A1B;
+  --ui-navbar-ink-soft: rgba(28, 26, 27, 0.68);
+  --ui-navbar-shadow: 0 1px 0 #E3E9F0;
+  --ui-sidebar-bg: #2B3440;
+  --ui-sidebar-active-bg: #DCE3EC;
+  --ui-sidebar-active-ink: #1C1A1B;
+  --ui-badge-bg: var(--nk-sun);
+  --ui-title-accent: #7D93AE;
+  --ui-highlight: var(--nk-aqua-deep);
+  --ui-tint: #F2F5F8;
+  --ui-tint-strong: #E3E9F0;
+  --ui-icon-bg: #E3E9F0;
+  --ui-icon-ink: #2F4A6B;
+  --ui-avatar-ink: #2F4A6B;
+  --ui-card-hover-border: #7D93AE;
+  /* A white filter bar would vanish into the white list card: pale bar, outlined fields */
+  --ui-filterbar-bg: var(--ui-tint);
+  --ui-filterbar-field-border: var(--ui-input-border);
+}
+
+/* The white avatar circle needs an outline on a white top bar */
+html[data-ui-theme="slate"]:not([data-theme="dark"]) .navbar .dropdown-navbar-user .avatar-frame {
+  box-shadow: inset 0 0 0 1px #D6DDE6;
+}
+
+html[data-ui-theme="slate"][data-theme="dark"] {
+  --ui-primary: #4A6688;
+  --ui-primary-hover: #57769B;
+  --ui-sidebar-active-bg: #B8C7D9;
+  --ui-sidebar-active-ink: #1C1A1B;
+  --ui-title-accent: #B8C7D9;
+  --ui-tint: rgba(184, 199, 217, 0.07);
+  --ui-tint-strong: rgba(184, 199, 217, 0.14);
+  --ui-icon-bg: rgba(184, 199, 217, 0.16);
+  --ui-icon-ink: #B8C7D9;
+  --ui-card-hover-border: #B8C7D9;
+}
+
+/* ── The picker dialog (ui_themes.js) ────────────────────────────────────── */
+.ui-theme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 14px;
+}
+
+.ui-theme-option {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  border: 2px solid transparent;
+  border-radius: var(--ui-radius-sm);
+  background: none;
+  text-align: left;
+  color: var(--ui-text);
+  cursor: pointer;
+}
+
+.ui-theme-option:hover {
+  background: var(--ui-tint);
+}
+
+.ui-theme-option:focus-visible {
+  outline: 2px solid var(--ui-primary);
+  outline-offset: 2px;
+}
+
+.ui-theme-option.selected {
+  border-color: var(--ui-primary);
+}
+
+.ui-theme-option .ui-theme-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  color: var(--ui-text-strong);
+}
+
+.ui-theme-option .ui-theme-tick {
+  display: none;
+  color: var(--ui-primary);
+}
+
+.ui-theme-option.selected .ui-theme-tick {
+  display: inline-flex;
+}
+
+.ui-theme-option .ui-theme-tick .icon {
+  --icon-stroke: var(--ui-primary);
+}
+
+.ui-theme-option .ui-theme-desc {
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--ui-text-soft);
+}
+
+/* Mini desk: rail on the left, top bar, a tinted panel, a button and a badge */
+.ui-theme-swatch {
+  display: grid;
+  grid-template-columns: 22% 1fr;
+  grid-template-rows: 18px 1fr;
+  height: 92px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #E7E5E4;
+  background: #F6F6F3;
+}
+
+.ui-theme-swatch .sw-rail {
+  grid-row: 1 / 3;
+  background: var(--ui-sidebar-bg);
+  padding: 22px 4px 0;
+}
+
+.ui-theme-swatch .sw-rail i {
+  display: block;
+  height: 6px;
+  margin-bottom: 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.ui-theme-swatch .sw-rail i:first-child {
+  background: var(--ui-sidebar-active-bg);
+}
+
+.ui-theme-swatch .sw-bar {
+  background: var(--ui-navbar-bg);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
+}
+
+.ui-theme-swatch .sw-bar i {
+  width: 34%;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--ui-navbar-ink);
+  opacity: 0.6;
+}
+
+.ui-theme-swatch .sw-body {
+  padding: 7px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ui-theme-swatch .sw-panel {
+  flex: 1;
+  border-radius: 5px;
+  background: var(--ui-tint);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 6px;
+}
+
+.ui-theme-swatch .sw-icon {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--ui-icon-bg);
+  box-shadow: inset 0 0 0 3px var(--ui-icon-bg), inset 0 0 0 7px var(--ui-icon-ink);
+}
+
+.ui-theme-swatch .sw-badge {
+  margin-left: auto;
+  width: 14px;
+  height: 9px;
+  border-radius: 5px;
+  background: var(--ui-badge-bg);
+}
+
+.ui-theme-swatch .sw-btn {
+  align-self: flex-end;
+  width: 40%;
+  height: 11px;
+  border-radius: 4px;
+  background: var(--ui-primary);
+}

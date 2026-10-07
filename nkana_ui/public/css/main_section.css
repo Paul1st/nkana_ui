@@ -1,0 +1,256 @@
+/* main_section.css - Page body, workspace widgets, lists and forms */
+
+/* Main column takes whatever the sidebar leaves (overrides Bootstrap's col-lg-10 width) */
+.layout-main > .layout-main-section-wrapper {
+  flex: 1 1 0 !important;
+  width: auto !important;
+  max-width: 100% !important;
+  min-width: 0;
+  margin-top: 10px;
+  border-radius: var(--ui-radius);
+  box-sizing: border-box;
+}
+
+.layout-main > .layout-main-section-wrapper > .layout-main-section {
+  background-color: transparent;
+  border: 0;
+}
+
+/* ── Page title ─────────────────────────────────────────────────────────── */
+.page-head .title-text {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--ui-text-strong);
+}
+
+/* ── Workspace shortcuts: white pills, dark text, yellow counts ─────────── */
+.shortcut-widget-box {
+  background-color: var(--ui-surface) !important;
+  border: 1px solid var(--ui-border) !important;
+  border-radius: 12px !important;
+  box-shadow: var(--ui-card-shadow) !important;
+  max-width: 100%;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+  /* width, padding and the round icon: workspace.css */
+}
+
+.shortcut-widget-box .widget-head .widget-title span {
+  color: var(--ui-text-strong) !important;
+  font-weight: 600;
+}
+
+.shortcut-widget-box .widget-head .widget-control svg,
+.shortcut-widget-box .widget-head .widget-control use {
+  stroke: var(--ui-text-strong);
+  --icon-stroke: var(--ui-text-strong);
+}
+
+.shortcut-widget-box:hover {
+  border-color: var(--ui-card-hover-border) !important;
+  transform: translateY(-1px);
+}
+
+.shortcut-widget-box:hover .widget-head .widget-title span {
+  color: var(--ui-primary) !important;
+}
+
+/* Count badge on a shortcut */
+.shortcut-widget-box .indicator-pill {
+  background-color: var(--ui-badge-bg) !important;
+  color: var(--ui-badge-ink) !important;
+  font-weight: 700;
+  min-width: 22px;
+  justify-content: center;
+}
+
+/* ── Other workspace widgets ────────────────────────────────────────────── */
+.widget {
+  border-radius: var(--ui-radius);
+  box-shadow: var(--ui-card-shadow);
+  border: 1px solid var(--ui-border);
+  padding: var(--ui-card-padding);
+}
+
+/* Custom HTML blocks (e.g. the ESS dashboard) size to content but never past the screen */
+.widget.custom-block-widget-box {
+  width: fit-content !important;
+  height: fit-content !important;
+  max-width: 100% !important;
+  overflow-x: auto;
+}
+
+.widget.dashboard-widget-box .widget-title span {
+  color: var(--ui-highlight) !important;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.widget.number-widget-box {
+  min-height: 140px;
+  padding: 16px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.widget.number-widget-box .widget-head .widget-label .widget-title span {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ui-text-soft);
+}
+
+.widget.number-widget-box .widget-body .widget-content .number {
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  line-height: 1;
+  color: var(--ui-text-strong);
+}
+
+@media (max-width: 575.98px) {
+  .widget.number-widget-box {
+    min-height: 116px;
+    padding: 12px;
+  }
+}
+
+/* Workspace headings ("My Workspace" etc.) */
+.codex-editor .ce-header,
+.codex-editor .ce-header .h4 {
+  font-weight: 800;
+  color: var(--ui-text-strong);
+}
+
+/* ── Lists: filter bar ──────────────────────────────────────────────────────
+   Colours come from the --ui-filterbar-* tokens in variables.css (same blue as the top bar;
+   the pale and dark-blue alternatives are listed there and in the guide). */
+.page-form {
+  background-color: var(--ui-filterbar-bg) !important;
+  border-bottom: 0;
+  padding-bottom: 12px;
+}
+
+/* Fields and buttons on the bar. Frappe draws them light grey with #999 placeholder text,
+   which was unreadable on a coloured bar, so they get their own colours here. */
+.page-form .frappe-control .form-control,
+.page-form .frappe-control select,
+.page-form .btn-default {
+  background-color: var(--ui-filterbar-field-bg) !important;
+  border: 1px solid var(--ui-filterbar-field-border) !important;
+  color: var(--ui-filterbar-field-ink) !important;
+  box-shadow: none !important;
+}
+
+.page-form .frappe-control .form-control::placeholder {
+  color: var(--ui-filterbar-placeholder) !important;
+  opacity: 1;
+}
+
+/* Focus / hover ring (--ui-filterbar-focus): royal blue on the sky-blue bar; yellow if the bar is dark blue */
+.page-form .frappe-control .form-control:focus {
+  border-color: var(--ui-filterbar-focus) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-filterbar-focus) 35%, transparent) !important;
+}
+
+.page-form .btn-default:hover,
+.page-form .btn-default:focus-visible {
+  border-color: var(--ui-filterbar-focus) !important;
+}
+
+.page-form .btn-default .es-icon,
+.page-form .btn-default .icon {
+  --icon-stroke: var(--ui-filterbar-field-ink);
+}
+
+/* Filter + sort buttons are button groups: keep a hairline between the halves */
+.page-form .btn-group > .btn-default + .btn-default {
+  border-left: 1px solid var(--ui-input-border) !important;
+}
+
+.frappe-list .list-row-head {
+  background-color: var(--ui-surface);
+}
+
+.frappe-list .list-row:hover,
+.frappe-list .list-row-container:hover .list-row {
+  background-color: var(--ui-tint) !important;
+}
+
+/* ── Forms ──────────────────────────────────────────────────────────────── */
+.form-page {
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius) !important;
+  box-shadow: var(--ui-card-shadow) !important;
+  /* No overflow clipping at all (2026-10-02). Clipping cut off dropdowns that open past the
+     bottom of the card: on a short form like Chart of Accounts Importer the Company list showed
+     only a sliver. (overflow: hidden is worse still: it also traps the sticky tab bar, rule 9.)
+     The rounded corners are kept by rounding the tab bar itself, below. */
+  overflow: visible;
+}
+
+/* No card frame for forms rendered inside modals */
+.modal .form-page,
+.modal-content .form-page,
+.modal-body .form-page {
+  border: 0;
+  box-shadow: none !important;
+}
+
+/* Section headings */
+.form-section .section-head {
+  font-weight: 700;
+  color: var(--ui-text-strong);
+}
+
+/* Form tabs: light bar, Nkana sky blue underline on the active tab */
+.form-page .form-tabs-list,
+.form-page .form-tabs-list.form-tabs-sticky-down,
+.form-page .form-tabs-list .nav.form-tabs,
+.form-page .form-tabs-list .nav-item {
+  background-color: var(--ui-surface) !important;
+}
+
+.form-page .form-tabs-list {
+  border-bottom: 1px solid var(--ui-border);
+  /* The tab bar touches the card's top corners; round it so it doesn't square them off */
+  border-radius: var(--ui-radius) var(--ui-radius) 0 0;
+}
+
+.form-page .form-tabs-list .nav-item {
+  border-radius: 0 !important;
+}
+
+.form-page .form-tabs-list .nav-item .nav-link {
+  color: var(--ui-text-soft) !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  font-weight: 600 !important;
+}
+
+.form-page .form-tabs-list .nav-item .nav-link:hover,
+.form-page .form-tabs-list .nav-item .nav-link:focus {
+  color: var(--ui-text-strong) !important;
+}
+
+.form-page .form-tabs-list .nav-item .nav-link.active {
+  color: var(--ui-primary) !important;
+  font-weight: 700 !important;
+  box-shadow: inset 0 -3px 0 var(--ui-primary);
+}
+
+/* Tabs scroll sideways on small screens instead of wrapping */
+@media (max-width: 767.98px) {
+  .form-page .form-tabs-list .nav.form-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .form-page .form-tabs-list .nav-item {
+    flex: 0 0 auto;
+  }
+}

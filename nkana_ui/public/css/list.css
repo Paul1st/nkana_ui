@@ -1,0 +1,80 @@
+/* list.css - Lists, report views (Report Builder) and query reports.
+   - Lists: light-blue header row with bold labels; wider status column (list look otherwise Frappe's)
+   - Paging buttons: selected size in soft blue
+   - Report tables (Frappe DataTable) use the Nkana roles through DataTable's own --dt-* variables */
+
+/* ── List header row (Employee Name, Status, … between the filters and the records) ──
+   Frappe draws it as a white strip with light grey text (it carries .text-muted), which barely
+   stands out. Make it a soft blue bar with dark, bold labels. */
+.frappe-list .list-row-head,
+.frappe-list .list-row-head.text-muted {
+  background-color: var(--ui-tint-strong);
+  color: var(--ui-text-strong) !important;
+  font-weight: 700;
+}
+
+.frappe-list .list-row-head .list-row-col,
+.frappe-list .list-row-head .level-item,
+.frappe-list .list-row-head .list-count {
+  color: var(--ui-text-strong) !important;
+}
+
+.frappe-list .list-row-head .icon,
+.frappe-list .list-row-head .es-icon {
+  --icon-stroke: var(--ui-text-strong);
+}
+
+/* ── Status column ──────────────────────────────────────────────────────── */
+/* Frappe gives every list column the same share of the width (~71px on a laptop with the
+   side menu open), so status pills like "Unpaid" or "Pending Approval" get cut off. The status
+   column is always the 3rd column (after the name and the hidden tag column) in both the header
+   and the rows, so widen exactly that column, only on lists that show status pills. */
+.frappe-list:has(.list-row .level-left > .list-row-col:nth-child(3) .indicator-pill)
+  .level-left > .list-row-col:nth-child(3) {
+  flex: 0 0 auto;
+  min-width: 110px;
+  max-width: 170px;
+}
+
+/* Status pills in list rows: bold text (user's request, 2026-10-02). Lists only; form titles,
+   reports and the timeline keep Frappe's weight. Undo: delete this rule. */
+.frappe-list .list-row .indicator-pill {
+  font-weight: 700;
+}
+
+/* ── Paging (20 / 100 / 500, Load more)─────────────────────────────────── */
+.list-paging-area {
+  padding: 12px 15px;
+  border-top: 1px solid var(--ui-border);
+}
+
+.list-paging-area .btn-paging.btn-info {
+  background-color: var(--ui-tint-strong) !important;
+  border-color: var(--ui-tint-strong) !important;
+  color: var(--ui-text-strong) !important;
+  font-weight: 700;
+}
+
+/* ── Report tables (Frappe DataTable) ───────────────────────────────────── */
+.datatable {
+  --dt-border-color: var(--ui-border);
+  --dt-header-cell-bg: var(--ui-tint);
+  --dt-cell-bg: var(--ui-surface);
+  --dt-light-bg: var(--ui-tint);
+  --dt-selection-highlight-color: var(--ui-tint-strong);
+  --dt-primary-color: var(--ui-primary);
+}
+
+.datatable .dt-cell--header .dt-cell__content {
+  color: var(--ui-text-strong);
+  font-weight: 600;
+}
+
+.datatable .dt-scrollable .dt-row:hover > .dt-cell {
+  background-color: var(--ui-tint);
+}
+
+/* Cell being edited: blue instead of Frappe's hard-coded light blue */
+.datatable .dt-cell__edit {
+  border-color: var(--ui-primary) !important;
+}

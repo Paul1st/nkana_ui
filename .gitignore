@@ -1,0 +1,34 @@
+.DS_Store
+*.pyc
+*.egg-info
+*.swp
+tags
+node_modules
+__pycache__
+
+
+# local preview output (render.py is tracked)
+design/preview/*
+!design/preview/render.py
+!design/preview/probe.py
+!design/preview/probe_forgot.py
+!design/preview/probe_frames.py
+!design/preview/probe_footer.py
+!design/preview/shoot.py
+!design/preview/dom.py
+
+# Frappe build output
+nkana_ui/public/dist/
+!design/preview/shoot_light.py
+!design/preview/preview_css.py
+!design/preview/probe_rail.py
+!design/preview/probe_rail2.py
+!design/preview/probe_edit.py
+!design/preview/blocks.py
+!design/preview/probe_edit2.py
+!design/preview/formdom.py
+!design/preview/tallshot.py
+!design/preview/tabs.py
+!design/preview/scrolltabs.py
+!design/preview/wfc.py
+!design/preview/wfs_form.py

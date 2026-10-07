@@ -1,0 +1,165 @@
+/* variables.css – desk design tokens for the Nkana look.
+ *
+ * Every colour the desk uses lives here, as a ROLE (navbar, sidebar, primary button …).
+ * Component files only ever say var(--ui-…). The values here are the default "Nkana Blue"
+ * theme; the other per-user colour themes override these roles in themes.css.
+ * Raw Nkana brand colours come from nkana_palette.css (imported first in custom.css).
+ *
+ * All tokens are namespaced --ui-* so they never overwrite Frappe's own variables.
+ * (The old theme set Frappe's --text-light to white, which made error messages,
+ * help text and the timeline invisible.) The only Frappe variables we set on purpose
+ * are in the "Frappe bridge" block below.
+ */
+:root {
+  /* ── Roles ─────────────────────────────────────────────── */
+  /* Primary actions: buttons, links, focus */
+  --ui-primary: var(--nk-sky-deep);
+  --ui-primary-hover: var(--nk-sky-deeper);
+  --ui-on-primary: #FFFFFF;
+
+  /* Top bar */
+  --ui-navbar-bg: var(--nk-sky);
+  --ui-navbar-ink: var(--nk-navy);
+  --ui-navbar-ink-soft: rgba(35, 31, 32, 0.72);
+
+  /* Side menu */
+  --ui-sidebar-bg: var(--nk-navy);
+  --ui-sidebar-ink: rgba(255, 255, 255, 0.88);
+  --ui-sidebar-muted: rgba(255, 255, 255, 0.5);
+  --ui-sidebar-hover-bg: rgba(255, 255, 255, 0.08);
+  --ui-sidebar-active-bg: var(--nk-sky);
+  --ui-sidebar-active-ink: var(--nk-navy);
+  --ui-sidebar-divider: rgba(255, 255, 255, 0.14);
+  --ui-sidebar-accent: var(--nk-sun); /* marker beside the current page: balances the blues */
+
+  /* Counts and badges */
+  --ui-badge-bg: var(--nk-sun);
+  --ui-badge-ink: var(--nk-navy);
+
+  /* "New notifications" dot on the bell: red, so it shows on the blue top bar */
+  --ui-bell-dot: #D92D20;
+
+  /* Small aqua bar before a form's title */
+  --ui-title-accent: var(--nk-aqua);
+
+  /* Initials in the top-bar avatar (white circle) */
+  --ui-avatar-ink: var(--nk-aqua-deep);
+
+  /* Border of a workspace shortcut card on hover */
+  --ui-card-hover-border: var(--nk-aqua);
+
+  /* Aqua highlight: current breadcrumb, chart titles */
+  --ui-highlight: var(--nk-aqua-deep);
+  /* The same, on the top bar (current breadcrumb); themes with a dark top bar lighten it */
+  --ui-navbar-highlight: var(--nk-sky-deeper); /* deep aqua is too faint on the sky bar */
+
+  /* List filter bar (the strip above every list): the same blue as the top bar, white fields.
+     Alternatives tried 2026-10-01:
+       pale:       --ui-filterbar-bg: var(--ui-tint); --ui-filterbar-field-border: var(--ui-input-border);
+       dark blue:  --ui-filterbar-bg: var(--nk-sky-deep); --ui-filterbar-field-bg: #FFFFFF;
+                   --ui-filterbar-field-border: transparent; --ui-filterbar-field-ink: var(--nk-navy);
+                   --ui-filterbar-placeholder: #6B6766; --ui-filterbar-focus: var(--nk-sun); */
+  --ui-filterbar-bg: var(--ui-navbar-bg);
+  --ui-filterbar-field-bg: var(--ui-surface);
+  --ui-filterbar-field-border: transparent;
+  --ui-filterbar-field-ink: var(--ui-text-strong);
+  --ui-filterbar-placeholder: var(--ui-text-soft);
+  --ui-filterbar-focus: var(--ui-primary);
+
+  /* Soft blue for section backgrounds and icon circles */
+  --ui-tint: var(--nk-sky-20);
+  --ui-tint-strong: var(--nk-sky-40);
+  --ui-icon-bg: var(--nk-sky-40);
+  --ui-icon-ink: var(--nk-sky-deep);
+
+  /* ── Surfaces & text ──────────────────────────────────── */
+  --ui-page-bg: #F6F6F3;
+  --ui-surface: #FFFFFF;
+  --ui-surface-elevated: #FFFFFF;
+  --ui-surface-input: #FFFFFF;
+  --ui-border: #E7E5E4;
+  --ui-input-border: #D6D3D1;
+  --ui-text: #2B2829;
+  --ui-text-strong: #1C1A1B;
+  --ui-text-soft: #6B6766;
+
+  /* ── Elevation ────────────────────────────────────────── */
+  --ui-card-shadow: 0 1px 2px rgba(28, 26, 27, 0.06), 0 4px 14px rgba(28, 26, 27, 0.06);
+  --ui-menu-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  --ui-navbar-shadow: 0 1px 0 rgba(35, 31, 32, 0.08);
+
+  /* ── Type & layout ────────────────────────────────────── */
+  --ui-font: "Plus Jakarta Sans", var(--font-stack, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  --ui-radius: 14px;
+  --ui-radius-sm: 10px;
+  --ui-card-padding: 22px;
+  --ui-sidebar-padding: 18px;
+  --ui-sidebar-width: clamp(240px, 20%, 290px);
+  --ui-layout-gap: 18px;
+  --ui-layout-padding: 10px;
+  --ui-logo-height: 40px;
+
+  /* ── Frappe bridge: Frappe variables we deliberately take over ──
+     --navbar-height: Frappe offsets its sticky page header and form tabs by it.
+     --primary: Frappe's accent (links, focus rings, checkboxes) -> Nkana royal blue. */
+  --navbar-height: 64px;
+  --bg-color: var(--ui-page-bg);
+  --text-color: var(--ui-text);
+  --primary: var(--ui-primary);
+}
+
+/* Tablet */
+@media (max-width: 991.98px) {
+  :root {
+    --navbar-height: 58px;
+    --ui-logo-height: 34px;
+    --ui-card-padding: 18px;
+    --ui-layout-gap: 0px;
+    --ui-layout-padding: 8px;
+  }
+}
+
+/* Phone */
+@media (max-width: 575.98px) {
+  :root {
+    --navbar-height: 54px;
+    --ui-logo-height: 30px;
+    --ui-card-padding: 14px;
+    --ui-radius: 12px;
+    --ui-layout-padding: 4px;
+  }
+}
+
+/* Dark mode (Frappe's Light/Dark/Automatic switcher) */
+html[data-theme="dark"] {
+  --ui-navbar-bg: #1A2633;
+  --ui-navbar-ink: #E5EDF5;
+  --ui-navbar-ink-soft: rgba(229, 237, 245, 0.72);
+  --ui-sidebar-bg: #0E1620;
+  --ui-tint: rgba(142, 214, 245, 0.08);
+  --ui-tint-strong: rgba(142, 214, 245, 0.16);
+  --ui-icon-bg: rgba(142, 214, 245, 0.18);
+  --ui-icon-ink: var(--nk-sky);
+  --ui-primary: #2C5BE0;
+  --ui-primary-hover: #3A68EB;
+  --ui-highlight: var(--nk-aqua);
+  /* Filter fields need an outline on the dark bar, or they disappear into it */
+  --ui-filterbar-field-border: #4A6378;
+
+  --ui-page-bg: #111B26;
+  --ui-surface: #16212D;
+  --ui-surface-elevated: #1A2633;
+  --ui-surface-input: #1F2D3A;
+  --ui-border: #314559;
+  --ui-input-border: #314559;
+  --ui-text: #E5EDF5;
+  --ui-text-strong: #F1F5F9;
+  --ui-text-soft: #9FB1C3;
+  --ui-card-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  --ui-menu-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+  --ui-navbar-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+
+  --bg-color: var(--ui-page-bg);
+  --text-color: var(--ui-text);
+  --primary: var(--ui-primary);
+}

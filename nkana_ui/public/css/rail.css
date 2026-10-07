@@ -1,0 +1,501 @@
+/* rail.css - The navy side menu on every desk page (built by public/js/ui_rail.js).
+   Colours: the --ui-sidebar-* role tokens in variables.css.
+   Desktop (≥992px): fixed on the left; the whole page shifts right. Collapsible to icons.
+   Tablet/phone: hidden; slides in from the ☰ button the script adds to the top bar. */
+
+:root {
+  --ui-rail-width: 248px;
+  --ui-rail-collapsed-width: 76px;
+}
+
+/* ── The rail ───────────────────────────────────────────────────────────── */
+.ui-rail {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1021;                 /* above the sticky top bar (1020), below modals (1050) */
+  display: flex;
+  flex-direction: column;
+  width: var(--ui-rail-width);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--ui-sidebar-bg), #FFFFFF 6%) 0%, var(--ui-sidebar-bg) 45%);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--ui-sidebar-ink);
+  font-family: var(--ui-font);
+  transition: width 0.2s ease, transform 0.25s ease;
+}
+
+/* A faint water-wave line behind the footer */
+.ui-rail::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 120px;
+  pointer-events: none;
+  opacity: 0.07;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120' fill='none' stroke='%23FFFFFF' stroke-width='1.5'%3E%3Cpath d='M0 40c30-14 50-14 80 0s50 14 80 0 50-14 80 0'/%3E%3Cpath d='M0 64c30-14 50-14 80 0s50 14 80 0 50-14 80 0'/%3E%3Cpath d='M0 88c30-14 50-14 80 0s50 14 80 0 50-14 80 0'/%3E%3C/svg%3E")
+    left bottom / 240px 120px repeat-x;
+}
+
+.ui-rail > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ui-rail__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 14px;
+  padding: 18px 6px 16px;
+  border-bottom: 1px solid var(--ui-sidebar-divider);
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.ui-rail__brand img {
+  /* The logo's blue ring would sink into the navy menu: sit it on a white circle */
+  flex: 0 0 auto;
+  width: 44px;
+  height: auto;
+  padding: 2px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08), 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: width 0.2s ease;
+}
+
+.ui-rail__brand-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.2;
+}
+
+.ui-rail__brand-name {
+  font-size: 1.02rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+}
+
+.ui-rail__brand-sub {
+  margin-top: 2px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--ui-sidebar-muted);
+  white-space: nowrap;
+}
+
+.ui-rail__nav {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 6px 12px 14px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  /* fade items out at the scroll edges */
+  mask-image: linear-gradient(180deg, transparent 0, #000 10px, #000 calc(100% - 16px), transparent 100%);
+}
+
+.ui-rail__label {
+  margin: 14px 10px 6px;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ui-sidebar-muted);
+}
+
+/* ── Items ──────────────────────────────────────────────────────────────── */
+.ui-rail__row {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.ui-rail__item {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin: 1px 0;
+  padding: 5px 10px 5px 6px;
+  border-radius: 10px;
+  color: var(--ui-sidebar-ink) !important;
+  font-size: 0.89rem;
+  font-weight: 500;
+  text-decoration: none !important;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.ui-rail__item:hover,
+.ui-rail__item:focus-visible {
+  background: var(--ui-sidebar-hover-bg);
+  color: #FFFFFF !important;
+}
+
+.ui-rail__item:focus-visible {
+  outline: 2px solid var(--ui-sidebar-active-bg);
+  outline-offset: 1px;
+}
+
+/* Icon in a soft rounded tile */
+.ui-rail__icon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.06);
+  transition: background-color 0.15s ease;
+}
+
+.ui-rail__item:hover .ui-rail__icon {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.ui-rail__icon svg {
+  --icon-stroke: var(--ui-sidebar-ink);
+  stroke: var(--ui-sidebar-ink);
+}
+
+.ui-rail__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ui-sidebar-muted);
+}
+
+.ui-rail__text {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Current page: soft tint, a filled icon tile, and a sun-yellow marker at the rail edge */
+.ui-rail__item.is-active {
+  background: color-mix(in srgb, var(--ui-sidebar-active-bg) 16%, transparent);
+  color: #FFFFFF !important;
+  font-weight: 650;
+}
+
+.ui-rail__item.is-active::before {
+  content: "";
+  position: absolute;
+  left: -12px;
+  top: 50%;
+  width: 4px;
+  height: 22px;
+  border-radius: 0 4px 4px 0;
+  background: var(--ui-sidebar-accent);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--ui-sidebar-accent) 60%, transparent);
+  transform: translateY(-50%);
+}
+
+.ui-rail__item.is-active .ui-rail__icon {
+  background: var(--ui-sidebar-active-bg);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--ui-sidebar-active-bg) 35%, transparent);
+}
+
+.ui-rail__item.is-active svg {
+  --icon-stroke: var(--ui-sidebar-active-ink);
+  stroke: var(--ui-sidebar-active-ink);
+}
+
+.ui-rail__item.is-active .ui-rail__dot {
+  background: var(--ui-sidebar-active-ink);
+}
+
+/* Expand/collapse a group (e.g. Finance → its sub-pages) */
+.ui-rail__toggle {
+  position: absolute;
+  right: 6px;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  color: var(--ui-sidebar-ink);
+}
+
+.ui-rail__toggle:hover {
+  background: var(--ui-sidebar-hover-bg);
+}
+
+.ui-rail__toggle svg {
+  --icon-stroke: var(--ui-sidebar-muted);
+  stroke: var(--ui-sidebar-muted);
+  stroke-width: 1.6;
+  transition: transform 0.2s ease;
+}
+
+.ui-rail__group.is-open > .ui-rail__row .ui-rail__toggle svg {
+  transform: rotate(180deg);
+}
+
+.ui-rail__row:has(.ui-rail__toggle) .ui-rail__item {
+  padding-right: 38px;
+}
+
+.ui-rail__children {
+  display: none;
+  margin: 2px 0 6px 20px;
+  padding-left: 10px;
+  border-left: 1px solid var(--ui-sidebar-divider);
+}
+
+.ui-rail__group.is-open > .ui-rail__children {
+  display: block;
+}
+
+.ui-rail__children .ui-rail__item {
+  font-size: 0.85rem;
+}
+
+.ui-rail__children .ui-rail__icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  background: transparent;
+}
+
+.ui-rail__children .ui-rail__item.is-active::before {
+  left: -12.5px; /* sits on the group's tree line */
+  height: 18px;
+  border-radius: 4px;
+  transform: translate(-50%, -50%);
+}
+
+/* ── Footer: user card + collapse button ───────────────────────────────── */
+.ui-rail__foot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 12px 12px;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.ui-rail__user {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 2px;
+  border-radius: 10px;
+  color: var(--ui-sidebar-ink) !important;
+  text-decoration: none !important;
+}
+
+.ui-rail__user .avatar {
+  flex: 0 0 auto;
+  box-shadow: 0 0 0 2px var(--ui-sidebar-accent);
+  border-radius: 50%;
+}
+
+.ui-rail__user-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.25;
+}
+
+.ui-rail__user-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.86rem;
+  font-weight: 650;
+  color: #FFFFFF;
+}
+
+.ui-rail__user-sub {
+  font-size: 0.72rem;
+  color: var(--ui-sidebar-muted);
+}
+
+.ui-rail__user:hover .ui-rail__user-sub {
+  color: var(--ui-sidebar-ink);
+}
+
+.ui-rail__collapse {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  color: var(--ui-sidebar-muted);
+}
+
+.ui-rail__collapse:hover {
+  background: var(--ui-sidebar-hover-bg);
+  color: var(--ui-sidebar-ink);
+}
+
+.ui-rail__collapse svg {
+  --icon-stroke: currentColor;
+}
+
+/* Workspace pages: the rail replaces Frappe's workspace sidebar, so hide Frappe's own ☰ for it
+   (on lists/forms that ☰ toggles the filter / form side panel, so it stays there). */
+body.has-ui-rail[data-route^="Workspaces"] .page-head .sidebar-toggle-btn {
+  display: none !important;
+}
+
+/* ── Desktop: make room for the rail; it replaces Frappe's workspace sidebar ── */
+@media (min-width: 992px) {
+  /* !important: Frappe's desk CSS sets body { padding: 0 !important } */
+  body.has-ui-rail {
+    padding-left: var(--ui-rail-width) !important;
+    transition: padding-left 0.2s ease;
+  }
+
+  body.has-ui-rail.ui-rail-collapsed {
+    padding-left: var(--ui-rail-collapsed-width) !important;
+  }
+
+  /* The badge lives in the rail now */
+  body.has-ui-rail .navbar .navbar-brand {
+    display: none !important;
+  }
+
+  /* …so the first breadcrumb no longer follows the logo: drop its leading ">" */
+  body.has-ui-rail #navbar-breadcrumbs {
+    margin-left: 0;
+  }
+
+  body.has-ui-rail #navbar-breadcrumbs > li:first-child > a::before {
+    display: none;
+  }
+
+  /* Frappe's own workspace sidebar would duplicate the rail */
+  body.has-ui-rail .layout-main > .layout-side-section:has(.desk-sidebar) {
+    display: none !important;
+  }
+
+  /* …except while editing a workspace ("Edit" button): its sidebar holds the controls to
+     hide, delete, reorder and add workspaces, so show it next to the rail until Save/Discard. */
+  body.has-ui-rail .layout-main:has(.layout-main-section.edit-mode) > .layout-side-section:has(.desk-sidebar) {
+    display: block !important;
+  }
+
+  /* Collapsed: icons only */
+  body.ui-rail-collapsed .ui-rail {
+    width: var(--ui-rail-collapsed-width);
+  }
+
+  body.ui-rail-collapsed .ui-rail__brand {
+    justify-content: center;
+    margin: 0 12px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  body.ui-rail-collapsed .ui-rail__brand img {
+    width: 40px;
+  }
+
+  body.ui-rail-collapsed .ui-rail__brand-text,
+  body.ui-rail-collapsed .ui-rail__text,
+  body.ui-rail-collapsed .ui-rail__label,
+  body.ui-rail-collapsed .ui-rail__toggle,
+  body.ui-rail-collapsed .ui-rail__children,
+  body.ui-rail-collapsed .ui-rail__user {
+    display: none !important;
+  }
+
+  body.ui-rail-collapsed .ui-rail__nav {
+    padding-top: 14px;
+  }
+
+  body.ui-rail-collapsed .ui-rail__item {
+    justify-content: center;
+    padding: 4px 0 !important;
+  }
+
+  body.ui-rail-collapsed .ui-rail__item.is-active {
+    background: transparent;
+  }
+
+  body.ui-rail-collapsed .ui-rail__foot {
+    justify-content: center;
+    margin: 0 10px 12px;
+    padding: 4px;
+  }
+
+  .ui-rail-mobile-toggle,
+  .ui-rail-backdrop {
+    display: none !important;
+  }
+}
+
+/* ── Tablet & phone: slide-in menu ──────────────────────────────────────── */
+@media (max-width: 991.98px) {
+  .ui-rail {
+    width: min(300px, 85vw);
+    transform: translateX(-105%);
+    box-shadow: 8px 0 30px rgba(0, 0, 0, 0.3);
+  }
+
+  body.ui-rail-open .ui-rail {
+    transform: translateX(0);
+  }
+
+  .ui-rail__collapse {
+    display: none;
+  }
+
+  .ui-rail-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1020;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  body.ui-rail-open .ui-rail-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .ui-rail-mobile-toggle {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    margin-right: 8px;
+    border-radius: 8px;
+    color: var(--ui-navbar-ink);
+  }
+
+  .ui-rail-mobile-toggle svg {
+    --icon-stroke: var(--ui-navbar-ink);
+  }
+
+  .ui-rail-mobile-toggle:hover {
+    background: rgba(0, 0, 0, 0.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-rail,
+  .ui-rail-backdrop,
+  body.has-ui-rail {
+    transition: none !important;
+  }
+}

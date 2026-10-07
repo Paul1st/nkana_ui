@@ -1,0 +1,126 @@
+/* sidebar.css - Page layout and workspace sidebar */
+
+.container.page-body {
+  width: 100%;
+  background-color: var(--ui-page-bg);
+}
+
+.layout-main {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  width: 100%;
+  padding: var(--ui-layout-padding);
+  gap: var(--ui-layout-gap);
+  box-sizing: border-box;
+}
+
+.layout-main > .layout-side-section {
+  flex: 0 0 var(--ui-sidebar-width) !important;
+  max-width: var(--ui-sidebar-width) !important;
+  min-width: 0;
+  background-color: var(--ui-surface);
+  border-radius: var(--ui-radius);
+  box-shadow: var(--ui-card-shadow);
+  padding: var(--ui-sidebar-padding);
+  box-sizing: border-box;
+  margin-top: 10px;
+  margin-left: 0;
+}
+
+/* Below 992px Frappe turns the sidebar into a slide-in overlay (.overlay-sidebar),
+   so the in-flow column collapses to nothing and the page gets the full width. */
+@media (max-width: 991.98px) {
+  .layout-main > .layout-side-section {
+    flex: 0 0 0 !important;
+    max-width: 0 !important;
+    min-width: 0 !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    overflow: visible;
+  }
+}
+
+/* ── Workspace navigation: navy menu ──────────────────────────────────────
+   Only the navigation sidebar (.desk-sidebar) turns dark; list filters and the
+   form side panel use the same column but stay light. */
+.layout-main > .layout-side-section:has(.desk-sidebar) {
+  background-color: var(--ui-sidebar-bg);
+  box-shadow: none;
+  padding: 16px 12px;
+}
+
+.overlay-sidebar:has(.desk-sidebar) {
+  background-color: var(--ui-sidebar-bg) !important;
+}
+
+.desk-sidebar .standard-sidebar-label,
+.desk-sidebar .standard-sidebar-label .section-title {
+  color: var(--ui-sidebar-muted) !important;
+  --icon-stroke: var(--ui-sidebar-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.desk-sidebar .sidebar-item-container {
+  margin-top: 2px;
+}
+
+.desk-sidebar .desk-sidebar-item {
+  padding: 8px 10px !important;
+  border-radius: var(--ui-radius-sm);
+  transition: background-color 0.15s ease;
+}
+
+.desk-sidebar .desk-sidebar-item .item-anchor,
+.desk-sidebar .desk-sidebar-item .sidebar-item-label {
+  color: var(--ui-sidebar-ink) !important;
+  font-weight: 500;
+}
+
+.desk-sidebar .desk-sidebar-item .sidebar-item-icon .icon,
+.desk-sidebar .desk-sidebar-item .sidebar-item-icon .es-icon,
+.desk-sidebar .desk-sidebar-item .sidebar-item-control .es-icon {
+  --icon-stroke: var(--ui-sidebar-ink);
+  stroke: var(--ui-sidebar-ink);
+}
+
+/* Hover */
+.desk-sidebar .sidebar-item-container:hover > .desk-sidebar-item:not(.selected) {
+  background-color: var(--ui-sidebar-hover-bg) !important;
+}
+
+/* Selected: Nkana sky blue pill with dark text */
+.desk-sidebar .desk-sidebar-item.selected {
+  background-color: var(--ui-sidebar-active-bg) !important;
+}
+
+.desk-sidebar .desk-sidebar-item.selected .item-anchor,
+.desk-sidebar .desk-sidebar-item.selected .sidebar-item-label {
+  color: var(--ui-sidebar-active-ink) !important;
+  font-weight: 700;
+}
+
+.desk-sidebar .desk-sidebar-item.selected .sidebar-item-icon .icon,
+.desk-sidebar .desk-sidebar-item.selected .sidebar-item-icon .es-icon,
+.desk-sidebar .desk-sidebar-item.selected .sidebar-item-control .es-icon {
+  --icon-stroke: var(--ui-sidebar-active-ink);
+  stroke: var(--ui-sidebar-active-ink);
+}
+
+/* Nested (child) workspaces */
+.desk-sidebar .sidebar-child-item .desk-sidebar-item .item-anchor {
+  color: var(--ui-sidebar-ink) !important;
+  opacity: 0.85;
+}
+
+/* Sidebar's own buttons (Edit, New Workspace) */
+.desk-sidebar .btn {
+  color: var(--ui-sidebar-ink);
+}

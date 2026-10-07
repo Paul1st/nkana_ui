@@ -1,0 +1,992 @@
+/* login.css – Nkana ERP sign-in page (www/login.html).
+ * Two variants: "navy" (navy footer, aqua edge) and "sky" (light-blue footer).
+ * The right-hand side is a water scene drawn in CSS + inline SVG over the tap photo
+ * (images/login_tap.webp: a 1000px copy of the Pexels original with a transparent left fade).
+ * Everything is scoped under .nk-login so it can't leak into other web pages.
+ */
+/* nkana_palette.css is imported by ui_login.bundle.scss, before this file. */
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url('/assets/nkana_ui/fonts/PlusJakartaSans-latin.woff2') format('woff2');
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Tokens ─────────────────────────────────────────────────────────────── */
+.nk-login {
+  --rl-ink: var(--nk-navy);
+  --rl-ink-soft: #4B5563;
+  --rl-placeholder: #6B7280;
+  --rl-panel-bg: #FAFCFE;
+  --rl-input-bg: #F3F4F6;
+  --rl-input-border: #D1D5DB;
+  --rl-link: var(--nk-sky-deep);
+  --rl-icon-bg: var(--nk-sky);
+  --rl-icon-ink: var(--nk-navy);
+  --rl-error: #B42318;
+  --rl-success: var(--nk-sky-deep);
+  --rl-radius: 10px;
+  --rl-panel-width: clamp(380px, 36%, 560px);
+}
+
+/* Navy variant (default) */
+.nk-login--navy {
+  --rl-btn: var(--nk-sky-deep);
+  --rl-btn-hover: var(--nk-sky-deeper);
+  --rl-edge: var(--nk-aqua);
+  --rl-headline-accent: var(--nk-sky);
+  --rl-footer-bg: var(--nk-navy);
+  --rl-footer-ink: #FFFFFF;
+  --rl-footer-stripe: var(--nk-aqua);
+}
+
+/* Sky variant: light-blue footer */
+.nk-login--sky {
+  --rl-btn: var(--nk-sky-deep);
+  --rl-btn-hover: var(--nk-sky-deeper);
+  --rl-edge: transparent;
+  --rl-headline-accent: var(--nk-sky);
+  --rl-footer-bg: var(--nk-sky-40);
+  --rl-footer-ink: var(--nk-navy);
+  --rl-footer-stripe: transparent;
+}
+
+/* ── Page shell: remove Frappe's web page chrome ────────────────────────── */
+body:has(.nk-login) {
+  background: var(--nk-navy) !important;
+}
+
+body:has(.nk-login) .page-content-wrapper,
+body:has(.nk-login) main,
+body:has(.nk-login) .page_content {
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: none !important;
+}
+
+/* ── Grid: panel | hero / panel | footer ────────────────────────────────── */
+.nk-login {
+  display: grid;
+  grid-template-columns: var(--rl-panel-width) 1fr;
+  grid-template-rows: 1fr auto;
+  grid-template-areas:
+    "panel hero"
+    "panel footer";
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  font-family: "Plus Jakarta Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--rl-ink);
+  background: var(--nk-navy);
+}
+
+/* ── Left panel ─────────────────────────────────────────────────────────── */
+.nk-login__panel {
+  grid-area: panel;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px clamp(24px, 5vw, 72px);
+  background: var(--rl-panel-bg);
+  border-left: 14px solid var(--rl-edge);
+  border-radius: 0 22px 22px 0;
+  box-shadow: 8px 0 32px rgba(0, 0, 0, 0.25);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.nk-login__panel-inner {
+  width: 100%;
+  max-width: 460px;
+}
+
+.nk-login__brand {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.nk-login__badge {
+  width: clamp(96px, 9vw, 124px);
+  height: auto;
+  margin: 0 auto 18px;
+  display: block;
+}
+
+/* The company name sits under the logo; it is long, so it is smaller than the old one-word name */
+.nk-login__tagline {
+  font-size: clamp(1rem, 1.35vw, 1.25rem);
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rl-link);
+  margin: 0 0 4px;
+}
+
+.nk-login__title {
+  font-size: clamp(2.4rem, 3.6vw, 3.25rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--rl-ink);
+  margin: 0 0 10px;
+}
+
+.nk-login__subtitle,
+.nk-login__section-text {
+  font-size: 0.92rem;
+  color: var(--rl-ink-soft);
+  margin: 0;
+}
+
+.nk-login__section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--rl-ink);
+  margin: 0 0 6px;
+}
+
+.nk-login__section-text {
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
+.nk-login__notice {
+  padding: 12px 14px;
+  border-radius: var(--rl-radius);
+  background: var(--nk-sun-20);
+  color: var(--rl-ink);
+}
+
+/* Frappe's .page-card → plain container */
+.nk-login .for-login .page-card,
+.nk-login .for-forgot .page-card,
+.nk-login .for-signup .page-card,
+.nk-login .for-email-login .page-card,
+.nk-login .for-login-with-email-link .page-card {
+  max-width: none;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.nk-login .page-card form {
+  max-width: none;
+}
+
+/* ── Fields ─────────────────────────────────────────────────────────────── */
+.nk-login .nk-field {
+  margin-bottom: 20px;
+}
+
+.nk-login .nk-field label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--rl-ink);
+}
+
+.nk-login .nk-req {
+  color: var(--rl-error);
+}
+
+.nk-login .page-card-body input[type="text"],
+.nk-login .page-card-body input[type="email"],
+.nk-login .page-card-body input[type="password"] {
+  height: 46px;
+  margin: 0;
+  padding: 0 14px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--rl-ink);
+  background: var(--rl-input-bg);
+  border: 1px solid var(--rl-input-border);
+  border-radius: var(--rl-radius);
+  box-shadow: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.nk-login .page-card-body input::placeholder {
+  color: var(--rl-placeholder);
+  opacity: 1;
+}
+
+.nk-login .page-card-body input:focus {
+  outline: none;
+  background: #FFFFFF;
+  border-color: var(--rl-btn);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--rl-btn) 22%, transparent);
+}
+
+.nk-login .page-card-body.invalid input {
+  border-color: var(--rl-error);
+}
+
+.nk-login .nk-password {
+  position: relative;
+}
+
+.nk-login .nk-password input {
+  padding-right: 72px;
+}
+
+.nk-login .toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  padding: 4px 6px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--rl-ink-soft);
+  cursor: pointer;
+  user-select: none;
+}
+
+.nk-login .toggle-password:hover,
+.nk-login .toggle-password:focus-visible {
+  color: var(--rl-ink);
+  outline: 2px solid var(--rl-btn);
+}
+
+.nk-login .nk-form-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px 16px;
+  margin: -4px 0 4px;
+  font-size: 0.88rem;
+}
+
+.nk-login .nk-form-options .nk-link:only-child {
+  margin-left: auto;
+}
+
+.nk-login .nk-link--quiet {
+  color: var(--rl-ink-soft);
+  font-weight: 500;
+}
+
+.nk-login .nk-link {
+  color: var(--rl-link);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.nk-login .nk-link:hover {
+  color: var(--nk-sky-deeper);
+}
+
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+.nk-login .page-card-actions {
+  margin-top: 24px;
+}
+
+.nk-login .nk-btn.btn-primary {
+  height: 48px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  background: var(--rl-btn);
+  border: 0;
+  border-radius: var(--rl-radius);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--rl-btn) 30%, transparent);
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.nk-login .nk-btn.btn-primary:hover,
+.nk-login .nk-btn.btn-primary:focus-visible {
+  background: var(--rl-btn-hover);
+  transform: translateY(-1px);
+}
+
+.nk-login .nk-btn.btn-default,
+.nk-login .btn-login-option {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--rl-ink);
+  background: #FFFFFF;
+  border: 1px solid var(--rl-input-border);
+  border-radius: var(--rl-radius);
+  margin-top: 10px;
+}
+
+.nk-login .nk-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0 6px;
+  color: var(--rl-ink-soft);
+  font-size: 0.9rem;
+}
+
+.nk-login .nk-divider::before,
+.nk-login .nk-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--rl-input-border);
+}
+
+.nk-login .nk-alt-action {
+  margin: 18px 0 0;
+  text-align: center;
+  color: var(--rl-ink-soft);
+}
+
+/* Error / status line under the form */
+.nk-login .login-feedback:empty {
+  display: none;
+}
+
+.nk-login .login-feedback {
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: var(--rl-radius);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--rl-ink);
+  background: var(--nk-sun-20);
+}
+
+.nk-login .login-feedback[data-tone="error"] {
+  color: var(--rl-error);
+  background: #FEF3F2;
+}
+
+.nk-login .login-feedback[data-tone="success"] {
+  color: var(--rl-success);
+  background: var(--nk-sky-20);
+}
+
+/* Help line */
+.nk-login__help {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rl-input-border);
+  color: var(--rl-ink);
+}
+
+.nk-login__help-icon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--nk-sky-40);
+  color: var(--nk-sky-deep);
+}
+
+.nk-login__help-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ── Right: water hero (gradient + animated waves, markup in login.html) ── */
+.nk-login__hero {
+  grid-area: hero;
+  position: relative;
+  margin-left: -24px;
+  /* runs under the panel's rounded corner */
+  display: flex;
+  align-items: center;
+  padding: 64px clamp(32px, 5vw, 80px) 48px calc(clamp(32px, 5vw, 80px) + 24px);
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse 60% 55% at 78% 30%, rgba(142, 214, 245, 0.28), transparent 70%),
+    radial-gradient(ellipse 45% 40% at 12% 85%, rgba(34, 184, 230, 0.22), transparent 70%),
+    linear-gradient(160deg, var(--nk-navy) 0%, var(--nk-sky-deeper) 52%, var(--nk-aqua-deep) 100%);
+  color: #FFFFFF;
+}
+
+/* The tap photo (black and white): "luminosity" keeps its light and shade but takes the
+   colour of the blue gradient underneath, so it reads as a Nkana-blue duotone. */
+.nk-login__hero::before,
+.nk-login__hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.nk-login__hero::before {
+  /* the image's left half fades to transparent (built into the WebP), so it melts into the gradient */
+  background: url("/assets/nkana_ui/images/login_tap.webp") right -40px top 32% / auto 125% no-repeat;
+  mix-blend-mode: luminosity;
+  opacity: 0.85;
+}
+
+/* hero_style = "photo": the photo as it is, filling the panel, nothing animated.
+   Only a soft dark shade on the left, so the white text stays readable. */
+.nk-login--hero-photo .nk-login__hero {
+  background: #111 var(--nk-hero-photo) center 30% / cover no-repeat;
+}
+
+.nk-login--hero-photo .nk-login__hero::before {
+  display: none;
+}
+
+.nk-login--hero-photo .nk-login__hero::after {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.35) 55%, rgba(0, 0, 0, 0) 85%);
+}
+
+/* Fade the photo into navy behind the text on the left */
+.nk-login__hero::after {
+  background:
+    linear-gradient(90deg, var(--nk-navy) 0%, rgba(11, 31, 63, 0.82) 38%, rgba(11, 31, 63, 0.15) 70%, transparent 100%);
+}
+
+/* Waves: three layers drift sideways at different speeds. Each path is two wave periods wide
+   of the same shape, so sliding it by half its width loops seamlessly. */
+.nk-login__waves {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 42%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.nk-login__wave {
+  transform-box: fill-box;
+  animation: nk-wave-drift linear infinite;
+}
+
+.nk-login__wave--back { fill: rgba(142, 214, 245, 0.16); animation-duration: 22s; }
+.nk-login__wave--mid { fill: rgba(34, 184, 230, 0.24); animation-duration: 15s; animation-direction: reverse; }
+.nk-login__wave--front { fill: rgba(11, 31, 63, 0.45); animation-duration: 10s; }
+
+/* Rising bubbles */
+.nk-login__bubbles {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+}
+
+.nk-login__bubbles li {
+  position: absolute;
+  bottom: -20px;
+  left: var(--x);
+  width: var(--s);
+  height: var(--s);
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.04) 60%);
+  animation: nk-bubble var(--t) ease-in var(--d) infinite;
+  opacity: 0;
+}
+
+@keyframes nk-wave-drift { to { transform: translateX(-50%); } }
+
+@keyframes nk-bubble {
+  0% { transform: translate(0, 0); opacity: 0; }
+  10% { opacity: 1; }
+  50% { transform: translate(10px, -45vh); }
+  90% { opacity: 0.8; }
+  100% { transform: translate(-6px, -90vh); opacity: 0; }
+}
+
+.nk-login__hero-content {
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.nk-login__headline {
+  font-size: clamp(1.9rem, 3vw, 2.9rem);
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  color: #FFFFFF;
+  margin: 0 0 18px;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
+}
+
+.nk-login__headline span {
+  color: var(--rl-headline-accent);
+}
+
+/* Slogan above the headline: "BIGGER · BETTER · SMARTER" */
+.nk-login__kicker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0 0 14px;
+  font-size: clamp(0.78rem, 0.85vw, 0.9rem);
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--nk-sky);
+}
+
+.nk-login__kicker span + span::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin: 0 0.9em;
+  border-radius: 50%;
+  background: var(--nk-aqua);
+  vertical-align: middle;
+}
+
+/* Vision / mission: glass cards with an aqua edge, side by side when there is room */
+.nk-login__statements {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  width: 100%;
+  max-width: 600px;
+  margin: 26px 0 0;
+}
+
+.nk-login__statement {
+  margin: 0;
+  padding: 16px 20px 16px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-left: 4px solid var(--nk-aqua);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.nk-login__statement figcaption {
+  margin: 0 0 6px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--nk-sky);
+}
+
+.nk-login__statement blockquote {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: clamp(0.95rem, 1.05vw, 1.08rem);
+  line-height: 1.45;
+  color: #FFFFFF;
+}
+
+.nk-login__lead {
+  font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+  line-height: 1.4;
+  max-width: 40ch;
+  margin: 0;
+  color: #FFFFFF;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.55);
+}
+
+.nk-login__features {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0;
+  list-style: none;
+  margin: 32px 0 0;
+  padding: 0;
+}
+
+.nk-login__features li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 0 28px;
+  text-align: center;
+  color: #FFFFFF;
+  white-space: nowrap;
+}
+
+.nk-login__features li:first-child {
+  padding-left: 0;
+}
+
+/* Vertical pipe dividers between items */
+.nk-login__features li+li {
+  border-left: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+/* Sky variant: darker dividers on the lighter footer */
+.nk-login--sky .nk-login__features li+li {
+  border-left-color: rgba(35, 31, 32, 0.25);
+}
+
+.nk-login__feature-label {
+  font-size: clamp(0.82rem, 0.9vw, 0.95rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.nk-login__feature-icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--nk-sky-40);
+  color: var(--nk-sky-deep);
+}
+
+.nk-login__feature-icon svg {
+  width: 30px;
+  height: 30px;
+}
+
+.nk-login__caption {
+  position: absolute;
+  right: 20px;
+  bottom: 14px;
+  max-width: 60%;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(20, 18, 18, 0.55);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────────── */
+.nk-login__footer {
+  grid-area: footer;
+  position: relative;
+  overflow: hidden;
+  margin-left: -24px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding: 22px clamp(32px, 5vw, 80px) 22px calc(clamp(32px, 5vw, 80px) + 24px);
+  background: var(--rl-footer-bg);
+  color: var(--rl-footer-ink);
+  border-top: 3px solid var(--rl-footer-stripe);
+  font-size: 0.84rem;
+}
+
+/* Diagonal aqua stripe (navy variant) */
+.nk-login__footer::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: -40px;
+  bottom: -40px;
+  width: 10px;
+  background: var(--rl-footer-stripe);
+  transform: rotate(-35deg);
+  transform-origin: top;
+}
+
+.nk-login__footer .nk-login__powered {
+  margin-right: auto;
+}
+
+.nk-login__powered {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.nk-login__powered:hover {
+  opacity: 0.8;
+}
+
+.nk-login__powered-logo {
+  height: 26px;
+  width: auto;
+}
+
+.nk-login__powered-logo--id {
+  height: 36px; /* the Innovative Dynamics logo has small lettering */
+}
+
+.nk-login--navy .nk-login__powered-logo--dark,
+.nk-login--sky .nk-login__powered-logo--light {
+  display: none;
+}
+
+.nk-login__legal {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nk-login__legal a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.nk-login__legal a:hover {
+  color: inherit;
+  opacity: 0.8;
+}
+
+/* ── Short laptop screens: compact the form so the page fits without scrolling ── */
+@media (min-width: 992px) and (max-height: 860px) {
+  .nk-login__panel {
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+
+  .nk-login__brand {
+    margin-bottom: 20px;
+  }
+
+  .nk-login__badge {
+    width: 84px;
+    margin-bottom: 10px;
+  }
+
+  .nk-login__title {
+    font-size: 2.4rem;
+    margin-bottom: 6px;
+  }
+
+  .nk-login__tagline {
+    margin-bottom: 2px;
+  }
+
+  .nk-login__subtitle {
+    font-size: 0.88rem;
+  }
+
+  .nk-login .nk-field {
+    margin-bottom: 14px;
+  }
+
+  .nk-login .nk-field label {
+    margin-bottom: 6px;
+  }
+
+  .nk-login .page-card-body input[type="text"],
+  .nk-login .page-card-body input[type="email"],
+  .nk-login .page-card-body input[type="password"] {
+    height: 46px;
+  }
+
+  .nk-login .page-card-actions {
+    margin-top: 16px;
+  }
+
+  .nk-login .nk-btn.btn-primary {
+    height: 48px;
+  }
+
+  .nk-login .nk-btn.btn-default,
+  .nk-login .btn-login-option {
+    height: 42px;
+  }
+
+  .nk-login .nk-divider {
+    margin: 12px 0 2px;
+  }
+
+  .nk-login__help {
+    margin-top: 18px;
+    padding-top: 14px;
+  }
+
+  .nk-login__help-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .nk-login__lead {
+    margin-bottom: 0;
+  }
+
+  .nk-login__statements {
+    margin-top: 18px;
+  }
+
+  .nk-login__statement {
+    padding: 12px 16px 12px 14px;
+  }
+}
+
+@media (min-width: 992px) and (max-height: 680px) {
+  .nk-login__badge {
+    width: 64px;
+  }
+
+  .nk-login__subtitle {
+    display: none;
+  }
+}
+
+/* ── Footer on laptop widths: keep credit, features and links on one line ── */
+@media (min-width: 992px) and (max-width: 1799.98px) {
+  .nk-wide-only {
+    display: none;
+  }
+
+  .nk-login__footer::before {
+    left: -8px;
+  }
+
+  .nk-login__features {
+    margin-left: 16px;
+  }
+
+  .nk-login__footer {
+    gap: 10px 12px;
+    padding: 22px 16px 22px 72px;
+    font-size: 0.8rem;
+  }
+
+  .nk-login__powered {
+    gap: 8px;
+  }
+
+  .nk-login__powered-logo {
+    height: 22px;
+  }
+
+  .nk-login__powered-logo--id {
+    height: 30px;
+  }
+
+  .nk-login__legal {
+    gap: 10px;
+  }
+}
+
+/* ── Tablet: stack – short water banner, form, footer ───────────────────── */
+@media (max-width: 991.98px) {
+  .nk-login {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "hero"
+      "panel"
+      "footer";
+  }
+
+  .nk-login__hero {
+    margin-left: 0;
+    padding: 40px 32px 56px;
+    min-height: 240px;
+  }
+
+  .nk-login__headline {
+    font-size: clamp(1.4rem, 5vw, 2.2rem);
+  }
+
+  .nk-login__lead {
+    margin-bottom: 0;
+  }
+
+
+
+  .nk-login__panel {
+    margin-top: -28px;
+    /* panel overlaps the bottom of the banner */
+    border-left: 0;
+    border-top: 8px solid var(--rl-edge);
+    border-radius: 22px 22px 0 0;
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.2);
+    overflow: visible;
+    padding: 36px 32px 40px;
+    align-items: flex-start;
+  }
+
+  .nk-login__footer {
+    margin-left: 0;
+    padding: 18px 32px;
+  }
+
+  .nk-login__footer::before {
+    display: none;
+  }
+}
+
+/* ── Phone ──────────────────────────────────────────────────────────────── */
+@media (max-width: 575.98px) {
+  .nk-login__hero {
+    min-height: 180px;
+    padding: 28px 20px 48px;
+  }
+
+  .nk-login__lead {
+    display: none;
+  }
+
+  .nk-login__headline {
+    white-space: normal;
+  }
+
+  .nk-login__features {
+    display: none;
+    /* footer stays short on phones */
+  }
+
+  .nk-login__statements {
+    display: none;
+  }
+
+  .nk-login__panel {
+    padding: 28px 20px 32px;
+  }
+
+  .nk-login__brand {
+    margin-bottom: 24px;
+  }
+
+  .nk-login__badge {
+    width: 96px;
+  }
+
+  .nk-login__footer {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 20px;
+    font-size: 0.875rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nk-login * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -1,0 +1,34 @@
+[
+ {
+  "default_value": null,
+  "doc_type": "Workflow State",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "style",
+  "is_system_generated": 1,
+  "modified": "2026-10-01 22:37:12.641973",
+  "module": null,
+  "name": "Workflow State-style-options",
+  "property": "options",
+  "property_type": "Text",
+  "row_name": null,
+  "value": "\nPrimary\nInfo\nSuccess\nWarning\nDanger\nInverse\nYellow\nPurple\nPink\nCyan\nDark Grey\nNkana Blue\nNkana Aqua\nNkana Yellow\nNkana Navy"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Workflow State",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "style",
+  "is_system_generated": 1,
+  "modified": "2026-10-01 22:37:12.835571",
+  "module": null,
+  "name": "Workflow State-style-description",
+  "property": "description",
+  "property_type": "Small Text",
+  "row_name": null,
+  "value": "Colour of this state's pill in lists and forms. Primary = blue, Info = light blue, Success = green, Warning = orange, Danger = red, Inverse = black; plus Yellow, Purple, Pink, Cyan, Dark Grey and the Nkana brand colours."
+ }
+]

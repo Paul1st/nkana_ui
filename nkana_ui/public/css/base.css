@@ -1,0 +1,80 @@
+/* base.css - Global base styles: font, page background, buttons, option hover */
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url('/assets/nkana_ui/fonts/PlusJakartaSans-latin.woff2') format('woff2');
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  background-color: var(--ui-page-bg) !important;
+  font-family: var(--ui-font);
+}
+
+/* Global navigation display */
+nav {
+  display: block !important;
+  unicode-bidi: isolate;
+}
+
+/* Primary button: Nkana royal blue */
+.btn-primary,
+.btn.btn-primary {
+  background-color: var(--ui-primary) !important;
+  border-color: var(--ui-primary) !important;
+  color: var(--ui-on-primary) !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  box-shadow: none;
+  transition: background-color 0.15s ease, transform 0.15s ease !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background-color: var(--ui-primary-hover) !important;
+  border-color: var(--ui-primary-hover) !important;
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+/* Secondary / default buttons: quiet, rounded like the primary */
+.btn-default,
+.btn-secondary {
+  border-radius: 8px !important;
+}
+
+/* Readable hover/selected state for autocomplete, filter and dropdown options */
+.awesomplete > ul > li:hover,
+.awesomplete > ul > li[aria-selected="true"],
+.awesomplete > ul > li.selected,
+.awesomplete > ul > div[role="option"]:hover,
+.awesomplete > ul > div[role="option"][aria-selected="true"],
+.ui-autocomplete .ui-menu-item-wrapper:hover,
+.ui-autocomplete .ui-menu-item-wrapper.ui-state-active,
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+  background: var(--ui-tint-strong) !important;
+  color: var(--ui-text-strong) !important;
+}
+
+.awesomplete > ul > div[role="option"]:hover p,
+.awesomplete > ul > div[role="option"][aria-selected="true"] p,
+.awesomplete > ul > div[role="option"]:hover strong,
+.awesomplete > ul > div[role="option"][aria-selected="true"] strong,
+.awesomplete > ul > div[role="option"]:hover .small,
+.awesomplete > ul > div[role="option"][aria-selected="true"] .small {
+  color: var(--ui-text-strong) !important;
+}
+
+/* Placeholder text: Frappe uses #999 on light-grey inputs (about 2.5:1 contrast).
+   Use the soft text colour instead (about 5:1), everywhere in the desk. */
+.form-control::placeholder,
+.awesomplete input::placeholder,
+textarea::placeholder {
+  color: var(--ui-text-soft) !important;
+  opacity: 1;
+}

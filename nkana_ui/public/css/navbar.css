@@ -1,0 +1,235 @@
+/* navbar.css - Top bar: Nkana sky blue, dark text; search; notifications and other dropdowns */
+
+.navbar {
+  background-color: var(--ui-navbar-bg) !important;
+  border-bottom: 0 !important;
+  box-shadow: var(--ui-navbar-shadow) !important;
+  height: var(--navbar-height) !important;
+}
+
+.app-logo {
+  height: var(--ui-logo-height) !important;
+  width: auto;
+  max-width: 40vw;
+  object-fit: contain;
+}
+
+/* Breadcrumbs and top-level icons sit directly on the top bar */
+.navbar #navbar-breadcrumbs,
+.navbar #navbar-breadcrumbs a,
+.navbar .navbar-nav > .nav-item > .nav-link {
+  color: var(--ui-navbar-ink-soft) !important;
+  --icon-stroke: var(--ui-navbar-ink);
+  font-weight: 500;
+}
+
+.navbar #navbar-breadcrumbs a:hover,
+.navbar .navbar-nav > .nav-item > .nav-link:hover {
+  color: var(--ui-navbar-ink) !important;
+}
+
+/* Current page in the breadcrumb: aqua highlight */
+.navbar #navbar-breadcrumbs li:last-child a {
+  color: var(--ui-navbar-highlight) !important;
+  font-weight: 700;
+}
+
+/* ── Notification bell ──
+   Frappe's own bell and "new notifications" dot (no number), made easier to see on the blue bar
+   (2026-10-02, user's choice after trying a number badge):
+   - bigger (22 px) and a thicker dark outline: Frappe draws the outline as a thin filled shape,
+     so a stroke in the same colour thickens it;
+   - the dot is red instead of Frappe's green (--green-700), which would not stand out on the blue bar.
+   The icon lives inside an SVG <use>, so only inherited properties (stroke, CSS variables) reach it. */
+.navbar .dropdown-notifications .notifications-icon {
+  opacity: 1;
+}
+
+/* No square blue focus box after a mouse click; keyboard focus keeps a rounded ring */
+.navbar .dropdown-notifications .notifications-icon:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+.navbar .dropdown-notifications .notifications-icon:focus-visible {
+  outline: 2px solid var(--ui-navbar-ink);
+  outline-offset: 2px;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.navbar .dropdown-notifications .notifications-icon .es-icon {
+  width: 22px;
+  height: 22px;
+  --icon-stroke: var(--ui-navbar-ink);
+  stroke: var(--ui-navbar-ink) !important;
+  stroke-width: 0.5px;
+  stroke-linejoin: round;
+}
+
+.navbar .dropdown-notifications .notifications-unseen .es-icon {
+  --green-700: var(--ui-bell-dot);
+}
+
+/* Avatar: white circle with dark initials */
+.navbar .dropdown-navbar-user .avatar-frame {
+  background-color: #FFFFFF !important;
+  color: var(--ui-avatar-ink) !important;
+  font-weight: 700;
+}
+
+@media (max-width: 575.98px) {
+  .navbar > .container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+/* Search */
+.search-bar .awesomplete input {
+  width: 100% !important;
+  padding-left: 36px;
+  height: 28px;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-regular);
+  letter-spacing: 0.02em;
+  background-color: var(--ui-surface-input) !important;
+  color: var(--ui-text-strong) !important;
+  border: 1px solid var(--ui-input-border) !important;
+}
+
+.search-bar .awesomplete input::placeholder {
+  color: var(--ui-text-soft) !important;
+}
+
+.search-bar svg,
+.search-bar .search-icon svg,
+.search-bar .search-icon use {
+  stroke: var(--ui-text-soft) !important;
+  color: var(--ui-text-soft) !important;
+}
+
+/* Notifications dropdown */
+.dropdown-menu.notifications-list {
+  background-color: var(--ui-surface-elevated) !important;
+  border: 1px solid var(--ui-border) !important;
+  box-shadow: var(--ui-menu-shadow) !important;
+}
+
+.dropdown-menu.notifications-list .notification-list-header ul li,
+.dropdown-menu.notifications-list .notification-list-body,
+.dropdown-menu.notifications-list .notification-list-body .title,
+.dropdown-menu.notifications-list .notification-list-body .subtitle,
+.dropdown-menu.notifications-list .notification-list-body .recent-item.notification-item,
+.dropdown-menu.notifications-list .notification-list-body .recent-item.notification-item *,
+.dropdown-menu.notifications-list .notification-list-body a.recent-item.notification-item:visited,
+.dropdown-menu.notifications-list .notification-list-body a.recent-item.notification-item:hover,
+.dropdown-menu.notifications-list .notification-list-body a.recent-item.notification-item:active {
+  color: var(--ui-text-strong) !important;
+}
+
+.dropdown-menu.notifications-list .notification-list-header ul li:hover,
+.dropdown-menu.notifications-list .notification-list-header ul .active {
+  color: var(--ui-primary) !important;
+  font-weight: 600;
+}
+
+.dropdown-menu.notifications-list .notification-list-body .list-footer .full-log-btn {
+  color: var(--ui-primary) !important;
+}
+
+.dropdown-menu.notifications-list .notification-list-body .notification-timestamp,
+.dropdown-menu.notifications-list .notification-list-body .notification-timestamp *,
+.dropdown-menu.notifications-list .notification-list-body .text-muted {
+  color: var(--ui-text-soft) !important;
+}
+
+.dropdown-menu.notifications-list .notification-list-body .recent-item.notification-item .avatar-frame {
+  color: inherit !important;
+}
+
+/* ── Navbar dropdowns (notifications, help, user menu) ─────────────────────
+   Frappe positions these for its 48px navbar, so with our taller bar they opened
+   inside it. The dropdown <li> sits centred in the bar; push the menu below it. */
+.navbar .navbar-nav > .nav-item.dropdown > .dropdown-menu {
+  margin-top: calc(var(--navbar-height) / 2 - 3px) !important;
+}
+
+/* Notifications: Frappe forces a 480px minimum height and roomy rows, which made the
+   panel cover most of a laptop screen. Size it to its content and to the screen instead. */
+.navbar .dropdown-notifications .notifications-list {
+  width: 400px;
+  max-width: calc(100vw - 24px);
+  min-height: 0;
+}
+
+.navbar .dropdown-notifications .notifications-list .notification-list-body {
+  max-height: min(440px, calc(100vh - var(--navbar-height) - 110px));
+}
+
+.notifications-list .recent-item.notification-item {
+  margin: 2px 8px;
+  padding: 8px 8px 8px 0;
+}
+
+.notifications-list .recent-item.notification-item:first-child {
+  margin-top: 6px;
+}
+
+.notifications-list .recent-item.notification-item .notification-body {
+  gap: 8px;
+}
+
+.notifications-list .recent-item.notification-item .notification-body::before {
+  margin-top: 12px;
+}
+
+/* Unread marker in Nkana sky blue (Frappe draws it black) */
+.notifications-list .recent-item.notification-item.unread .notification-body::before {
+  background: var(--ui-primary) !important;
+}
+
+/* Text uses the full panel width. Frappe caps the row at 455px and the text at 360px, which
+   left the right third empty in the wider narrow-window sheet. */
+.notifications-list .recent-item.notification-item {
+  max-width: none;
+}
+
+.notifications-list .recent-item.notification-item .notification-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.notifications-list .recent-item.notification-item .message {
+  max-width: none;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Two lines per notification; the full text is one click away */
+.notifications-list .recent-item.notification-item .message > div:first-child {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Narrow windows (phones, and a laptop window snapped to half the screen): a sheet just below
+   the navbar, full width with a small margin. Below 768px Frappe sets the panel to
+   min-width: 100vw and shifts it right, which pushed it off the left edge of the window. */
+@media (max-width: 767.98px) {
+  .navbar .navbar-nav > .nav-item.dropdown-notifications > .dropdown-menu.notifications-list {
+    position: fixed !important;
+    top: calc(var(--navbar-height) + 4px) !important;
+    left: 8px !important;
+    right: 8px !important;
+    width: auto;
+    min-width: 0;
+    max-width: none;
+    margin-top: 0 !important;
+  }
+
+  .navbar .dropdown-notifications .notifications-list .notification-list-body {
+    max-height: calc(100dvh - var(--navbar-height) - 100px);
+  }
+}

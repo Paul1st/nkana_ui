@@ -1,0 +1,60 @@
+/* workflow_colours.css - Nkana colours for workflow state pills (chosen in Workflow State → Style).
+   Defined the same way as Frappe's own pill colours (--bg-<colour> / --text-on-<colour>), so they
+   work for pills (lists, form header) and dots. Mapping from Style to colour:
+   public/js/ui_workflow_colours.js. */
+
+:root {
+  --bg-nk-blue: var(--nk-sky-40);
+  --text-on-nk-blue: var(--nk-sky-deeper);
+  --bg-nk-aqua: var(--nk-aqua-20);
+  --text-on-nk-aqua: var(--nk-aqua-deeper);
+  --bg-nk-yellow: var(--nk-sun-20);
+  --text-on-nk-yellow: #5C5200;
+  --bg-nk-navy: var(--nk-navy);
+  --text-on-nk-navy: #FFFFFF;
+}
+
+html[data-theme="dark"] {
+  --bg-nk-blue: rgba(168, 215, 176, 0.18);
+  --text-on-nk-blue: var(--nk-sky);
+  --bg-nk-aqua: rgba(207, 130, 74, 0.2);
+  --text-on-nk-aqua: var(--nk-aqua-60);
+  --bg-nk-yellow: rgba(237, 219, 0, 0.16);
+  --text-on-nk-yellow: var(--nk-sun-60);
+  --bg-nk-navy: #4F4C4D;
+  --text-on-nk-navy: #FFFFFF;
+}
+
+.indicator-pill.nk-blue,
+.indicator-pill.nk-aqua,
+.indicator-pill.nk-yellow,
+.indicator-pill.nk-navy,
+.indicator-pill-right.nk-blue,
+.indicator-pill-right.nk-aqua,
+.indicator-pill-right.nk-yellow,
+.indicator-pill-right.nk-navy {
+  background: var(--bg-c);
+  color: var(--text-c);
+}
+
+.indicator-pill.nk-blue,
+.indicator-pill-right.nk-blue { --bg-c: var(--bg-nk-blue); --text-c: var(--text-on-nk-blue); }
+.indicator-pill.nk-aqua,
+.indicator-pill-right.nk-aqua { --bg-c: var(--bg-nk-aqua); --text-c: var(--text-on-nk-aqua); }
+.indicator-pill.nk-yellow,
+.indicator-pill-right.nk-yellow { --bg-c: var(--bg-nk-yellow); --text-c: var(--text-on-nk-yellow); }
+.indicator-pill.nk-navy,
+.indicator-pill-right.nk-navy { --bg-c: var(--bg-nk-navy); --text-c: var(--text-on-nk-navy); }
+
+/* Pills that show a dot (e.g. the form header pill) and plain dot indicators */
+.indicator-pill.nk-blue::before,
+.indicator-pill.nk-aqua::before,
+.indicator-pill.nk-yellow::before,
+.indicator-pill.nk-navy::before {
+  background: var(--text-c);
+}
+
+.indicator.nk-blue::before { background: var(--text-on-nk-blue); }
+.indicator.nk-aqua::before { background: var(--text-on-nk-aqua); }
+.indicator.nk-yellow::before { background: var(--text-on-nk-yellow); }
+.indicator.nk-navy::before { background: var(--bg-nk-navy); }

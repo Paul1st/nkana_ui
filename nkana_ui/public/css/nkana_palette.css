@@ -1,0 +1,40 @@
+/* nkana_palette.css – Nkana Water Supply and Sanitation Company brand colours.
+ *
+ * Taken from the company logo (images/nkana_logo.png): the royal-blue ring, the water
+ * (sky to aqua), and the yellow tap. Navy is a deep version of the ring for dark surfaces.
+ *
+ * Raw palette only. Pages and themes map these onto their own tokens.
+ * The "deep" shades are darker versions used where white text sits on the colour
+ * (contrast with #FFF in brackets; readable text needs 4.5:1).
+ */
+:root {
+  /* Primaries */
+  --nk-navy: #0B1F3F;   /* text, dark surfaces (side menu, login footer) */
+  --nk-sky: #8ED6F5;    /* light water blue: top bar, selected menu item (navy text on it) */
+  --nk-aqua: #22B8E6;   /* the water in the logo: accent bars, highlights */
+  --nk-sun: #F5C400;    /* the tap: count badges (navy text on it) */
+
+  /* Tints (80 / 60 / 40 / 20 % on white) */
+  --nk-navy-80: #3C4C65;
+  --nk-navy-60: #6D798C;
+  --nk-navy-40: #9DA5B2;
+  --nk-navy-20: #CED2D9;
+  --nk-aqua-80: #4EC6EB;
+  --nk-aqua-60: #7AD4F0;
+  --nk-aqua-40: #A7E3F5;
+  --nk-aqua-20: #D3F1FA;
+  --nk-sky-80: #A5DEF7;
+  --nk-sky-60: #BBE6F9;
+  --nk-sky-40: #D2EFFB;
+  --nk-sky-20: #E8F7FD;
+  --nk-sun-80: #F7D033;
+  --nk-sun-60: #F9DC66;
+  --nk-sun-40: #FBE799;
+  --nk-sun-20: #FDF3CC;
+
+  /* Deep shades for white text */
+  --nk-sky-deep: #1B3FC4;       /* 8.2:1 – the logo's royal blue: primary buttons, links */
+  --nk-sky-deeper: #15319A;     /* 10.8:1 – hover */
+  --nk-aqua-deep: #0A6E99;      /* 5.7:1 */
+  --nk-aqua-deeper: #085A7E;    /* 7.6:1 – hover */
+}
